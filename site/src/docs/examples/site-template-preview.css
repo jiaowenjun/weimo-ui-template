@@ -156,26 +156,28 @@
   overflow: auto;
 }
 
-.site-template-preview__content [data-slot='card'] {
+/* 示例内容区按 0.55 比例复用标准 ComponentPreviewCard，只压缩间距字号 */
+.site-template-preview__content .component-preview-card {
   flex: none;
+  gap: 8px;
+  padding: 10px 12px;
 }
 
-.site-template-preview__content [data-slot='card-header'] {
-  padding: 11px 12px 9px;
-}
-
-.site-template-preview__content [data-slot='card-title'] {
+.site-template-preview__content .component-preview-card .base-card__title {
   font-size: 0.72rem;
 }
 
-.site-template-preview__content [data-slot='card-description'] {
-  font-size: 0.62rem;
-}
-
-.site-template-preview__content [data-slot='card-panel'] {
+.site-template-preview__content .component-preview-card .base-card__content {
   display: grid;
   gap: 7px;
+  min-height: 0;
   padding: 12px;
+}
+
+.site-template-preview__content .site-template-preview__card-description {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.62rem;
 }
 
 .site-template-preview__placeholder {

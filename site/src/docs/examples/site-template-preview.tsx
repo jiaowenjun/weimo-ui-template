@@ -6,13 +6,6 @@ import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
 import { GhostIconButton } from 'weimo-ui-core/components/ghost-icon-button'
 import { Slider } from 'weimo-ui-core/components/slider'
 import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardPanel,
-  CardTitle,
-} from 'weimo-ui-template/components/card'
-import {
   getNextThemeMode,
   getThemeToggleLabel,
   type ThemeMode,
@@ -170,27 +163,21 @@ function DemoNavigation({ onNavigate }: { onNavigate?: () => void }) {
 function DemoContent() {
   return (
     <main className="site-template-preview__content">
-      <Card>
-        <CardHeader>
-          <CardTitle>响应式站点壳层</CardTitle>
-          <CardDescription>导航、标题栏与主题入口保持一致。</CardDescription>
-        </CardHeader>
-        <CardPanel>
-          <span className="site-template-preview__placeholder site-template-preview__placeholder--long" />
-          <span className="site-template-preview__placeholder" />
-        </CardPanel>
-      </Card>
+      <ComponentPreviewCard label="响应式站点壳层">
+        <p className="site-template-preview__card-description">
+          导航、标题栏与主题入口保持一致。
+        </p>
+        <span className="site-template-preview__placeholder site-template-preview__placeholder--long" />
+        <span className="site-template-preview__placeholder" />
+      </ComponentPreviewCard>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>单列内容区</CardTitle>
-          <CardDescription>页面内容按卡片顺序自然向下展开。</CardDescription>
-        </CardHeader>
-        <CardPanel>
-          <span className="site-template-preview__placeholder site-template-preview__placeholder--long" />
-          <span className="site-template-preview__placeholder site-template-preview__placeholder--short" />
-        </CardPanel>
-      </Card>
+      <ComponentPreviewCard label="单列内容区">
+        <p className="site-template-preview__card-description">
+          页面内容按卡片顺序自然向下展开。
+        </p>
+        <span className="site-template-preview__placeholder site-template-preview__placeholder--long" />
+        <span className="site-template-preview__placeholder site-template-preview__placeholder--short" />
+      </ComponentPreviewCard>
     </main>
   )
 }
