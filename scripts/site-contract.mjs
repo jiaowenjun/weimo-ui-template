@@ -60,6 +60,26 @@ assert.match(
   /window\.matchMedia\(narrowViewportQuery\)[\s\S]*addEventListener\('change', syncViewport\)/,
   'the preview must react to real viewport width changes',
 )
+assert.match(
+  layoutPreview,
+  /from 'weimo-ui-core\/components\/slider'/,
+  'the content width control must use the core Slider',
+)
+assert.match(
+  layoutPreview,
+  /footer=\{[\s\S]*ariaLabel="调整示例内容区宽度"/,
+  'the preview card footer must host the content width slider',
+)
+assert.match(
+  layoutPreview,
+  /aria-label="重置示例内容区宽度"[\s\S]*onClick=\{resetContentWidth\}/,
+  'the footer reset button must restore the default content width',
+)
+assert.match(
+  layoutPreview,
+  /addEventListener\('resize', syncPreviewNarrow\)/,
+  'the preview must reflow to the narrow layout from its own element width',
+)
 assert.doesNotMatch(
   layoutPreview,
   /site-template-preview__controls/,

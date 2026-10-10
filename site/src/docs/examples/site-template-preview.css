@@ -47,12 +47,14 @@
   grid-template-columns: 148px minmax(0, 1fr);
 }
 
-.site-template-preview__viewport--narrow {
-  width: min(100%, 320px);
-}
-
+/* 宽度由底部滑块以内联样式驱动：真实视口为窄屏时沿用 320px 上限 */
 .site-template-preview__viewport--narrow .site-template-preview__workspace {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* 拖动滑块期间宽度逐帧跟手，松手与重置归位恢复过渡动画 */
+.site-template-preview__viewport--resizing {
+  transition: none;
 }
 
 .site-template-preview__sidebar,
@@ -212,6 +214,13 @@
   from {
     transform: translateX(-100%);
   }
+}
+
+.site-template-preview__width-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 @media (max-width: 520px) {
