@@ -46,6 +46,26 @@ assert.doesNotMatch(
   'the card preview must not mount a second viewport-level SiteTemplate',
 )
 assert.match(
+  layoutPreview,
+  /FrostedLabel/,
+  'the card preview title must use the same frosted material as SiteTemplate',
+)
+assert.match(
+  layoutPreview,
+  /FrostedIconButton/,
+  'the card preview controls must use the same frosted material as SiteTemplate',
+)
+assert.match(
+  layoutPreview,
+  /data-preview-theme=\{theme\}/,
+  'the card preview must expose an isolated light and dark theme scope',
+)
+assert.match(
+  layoutPreview,
+  /setTheme\(\(currentTheme\) =>\s*currentTheme === 'light' \? 'dark' : 'light'/,
+  'the card preview theme button must switch between light and dark themes',
+)
+assert.match(
   globalStyles,
   /@import "weimo-ui-template\/styles\/base\.css";/,
   'the site must consume the public template base stylesheet',

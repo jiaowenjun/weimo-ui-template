@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
+import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
 import {
   Card,
   CardDescription,
@@ -11,8 +13,55 @@ import {
 import './site-template-preview.css'
 
 type PreviewViewport = 'wide' | 'narrow'
+type PreviewTheme = 'light' | 'dark'
 
 const navigationItems = ['概览', '组件', '设计令牌']
+
+function MenuIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <path
+        d="M4 7h16M4 12h16M4 17h16"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
+
+function SunIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <circle
+        cx="12"
+        cy="12"
+        r="3.5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <path
+        d="M20.2 15.2A8.6 8.6 0 0 1 8.8 3.8a8.6 8.6 0 1 0 11.4 11.4Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
 
 function DemoNavigation({ onNavigate }: { onNavigate?: () => void }) {
   return (
@@ -66,7 +115,10 @@ function DemoContent() {
 export function SiteTemplatePreview() {
   const [viewport, setViewport] = useState<PreviewViewport>('wide')
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [theme, setTheme] = useState<PreviewTheme>('light')
   const narrow = viewport === 'narrow'
+  const themeToggleLabel =
+    theme === 'light' ? '切换示例为深色主题' : '切换示例为浅色主题'
 
   function selectViewport(nextViewport: PreviewViewport) {
     setViewport(nextViewport)
@@ -93,41 +145,49 @@ export function SiteTemplatePreview() {
       </div>
 
       <div
-        className={`site-template-preview__viewport site-template-preview__viewport--${viewport}`}
+        className={`site-template-preview__viewport site-template-preview__viewport--${viewport}${theme === 'dark' ? ' dark' : ''}`}
+        data-preview-theme={theme}
       >
-        {!narrow ? (
-          <aside className="site-template-preview__sidebar">
-            <DemoNavigation />
-          </aside>
-        ) : null}
+        <div className="site-template-preview__workspace">
+          {!narrow ? (
+            <aside className="site-template-preview__sidebar">
+              <DemoNavigation />
+            </aside>
+          ) : null}
 
-        <div className="site-template-preview__page">
-          <header className="site-template-preview__top-bar">
-            <div>
-              {narrow ? (
-                <button
-                  aria-expanded={drawerOpen}
-                  aria-label="切换示例侧边栏"
-                  className="site-template-preview__icon-button"
-                  onClick={() => setDrawerOpen((open) => !open)}
-                  type="button"
-                >
-                  <span />
-                  <span />
-                  <span />
-                </button>
-              ) : null}
-              <strong>页面标题</strong>
-            </div>
-            <button
-              aria-label="示例主题切换按钮"
-              className="site-template-preview__theme-button"
-              type="button"
-            >
-              ◐
-            </button>
-          </header>
-          <DemoContent />
+          <div className="site-template-preview__page">
+            <header className="site-template-preview__top-bar">
+              <div>
+                {narrow ? (
+                  <FrostedIconButton
+                    aria-expanded={drawerOpen}
+                    aria-label="切换示例侧边栏"
+                    className="site-template-preview__icon-button"
+                    onClick={() => setDrawerOpen((open) => !open)}
+                    size="sm"
+                  >
+                    <MenuIcon />
+                  </FrostedIconButton>
+                ) : null}
+                <FrostedLabel className="site-template-preview__page-title">
+                  页面标题
+                </FrostedLabel>
+              </div>
+              <FrostedIconButton
+                aria-label={themeToggleLabel}
+                className="site-template-preview__theme-button"
+                onClick={() =>
+                  setTheme((currentTheme) =>
+                    currentTheme === 'light' ? 'dark' : 'light',
+                  )
+                }
+                size="sm"
+              >
+                {theme === 'light' ? <SunIcon /> : <MoonIcon />}
+              </FrostedIconButton>
+            </header>
+            <DemoContent />
+          </div>
         </div>
 
         {narrow && drawerOpen ? (
