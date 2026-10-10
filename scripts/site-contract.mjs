@@ -17,6 +17,10 @@ const globalStyles = await readFile(
   new URL('../site/src/styles/global.css', import.meta.url),
   'utf8',
 )
+const mainEntry = await readFile(
+  new URL('../site/src/main.tsx', import.meta.url),
+  'utf8',
+)
 const sitePackage = JSON.parse(
   await readFile(new URL('../site/package.json', import.meta.url), 'utf8'),
 )
@@ -45,6 +49,11 @@ assert.match(
   globalStyles,
   /@import "weimo-ui-template\/styles\/base\.css";/,
   'the site must consume the public template base stylesheet',
+)
+assert.ok(
+  mainEntry.indexOf("import './styles/global.css'") <
+    mainEntry.indexOf("import App from './app/app'"),
+  'global styles must load before App so Tailwind establishes cascade layer order before component CSS',
 )
 assert.equal(
   sitePackage.dependencies['react-router'],
