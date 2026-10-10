@@ -32,13 +32,33 @@ assert.match(
 )
 assert.match(
   layoutPage,
-  /from 'weimo-ui-template\/components\/card'/,
-  'the example page must consume the public preview card API',
+  /return <SiteTemplatePreview \/>/,
+  'the example page must render the layout preview directly',
 )
 assert.match(
-  layoutPage,
-  /<PreviewPage[\s\S]*<SiteTemplatePreview \/>[\s\S]*<\/PreviewPage>/,
-  'the template layout example must stay inside PreviewPage',
+  layoutPreview,
+  /from 'weimo-ui-core\/components\/component-preview-card'/,
+  'the layout example must use the standard ComponentPreviewCard',
+)
+assert.match(
+  layoutPreview,
+  /from 'weimo-ui-core\/components\/labeled-switch'/,
+  'the layout example must use the standard labeled Switch control',
+)
+assert.match(
+  layoutPreview,
+  /<ComponentPreviewCard[\s\S]*action=\{[\s\S]*<LabeledSwitch[\s\S]*labelOff="宽屏"[\s\S]*labelOn="窄屏"[\s\S]*label="SiteTemplate 布局示例"/,
+  'the preview card header must show its title and the wide/narrow Switch action',
+)
+assert.match(
+  layoutPreview,
+  /checked=\{narrow\}[\s\S]*onCheckedChange=\{\(checked\) =>\s*selectViewport\(checked \? 'narrow' : 'wide'\)/,
+  'the Switch state must control the preview viewport mode',
+)
+assert.doesNotMatch(
+  layoutPreview,
+  /site-template-preview__controls/,
+  'the wide/narrow control must not remain inside the preview canvas',
 )
 assert.doesNotMatch(
   layoutPreview,

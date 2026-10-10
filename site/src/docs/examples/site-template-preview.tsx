@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
+import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview-card'
 import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
 import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
+import { LabeledSwitch } from 'weimo-ui-core/components/labeled-switch'
 import {
   Card,
   CardDescription,
@@ -126,24 +128,21 @@ export function SiteTemplatePreview() {
   }
 
   return (
-    <div className="site-template-preview">
-      <div aria-label="预览视口" className="site-template-preview__controls">
-        <button
-          aria-pressed={!narrow}
-          onClick={() => selectViewport('wide')}
-          type="button"
-        >
-          宽屏
-        </button>
-        <button
-          aria-pressed={narrow}
-          onClick={() => selectViewport('narrow')}
-          type="button"
-        >
-          窄屏
-        </button>
-      </div>
-
+    <ComponentPreviewCard
+      action={
+        <LabeledSwitch
+          ariaLabel="切换预览视口宽度"
+          checked={narrow}
+          labelOff="宽屏"
+          labelOn="窄屏"
+          onCheckedChange={(checked) =>
+            selectViewport(checked ? 'narrow' : 'wide')
+          }
+        />
+      }
+      data-component-id="site-template"
+      label="SiteTemplate 布局示例"
+    >
       <div
         className={`site-template-preview__viewport site-template-preview__viewport--${viewport}${theme === 'dark' ? ' dark' : ''}`}
         data-preview-theme={theme}
@@ -206,6 +205,6 @@ export function SiteTemplatePreview() {
           </div>
         ) : null}
       </div>
-    </div>
+    </ComponentPreviewCard>
   )
 }
