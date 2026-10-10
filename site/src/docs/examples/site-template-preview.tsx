@@ -10,17 +10,32 @@ import {
   CardPanel,
   CardTitle,
 } from 'weimo-ui-template/components/card'
+import {
+  getNextThemeMode,
+  getThemeToggleLabel,
+  type ThemeMode,
+} from 'weimo-ui-template/components/site-template-model'
 
 import './site-template-preview.css'
 
 type PreviewViewport = 'wide' | 'narrow'
-type PreviewTheme = 'light' | 'dark'
 
 const navigationItems = ['概览', '组件', '设计令牌']
 const narrowViewportQuery = '(max-width: 699px)'
+const systemThemeQuery = '(prefers-color-scheme: dark)'
 
 function viewportIsNarrow() {
-  return typeof window !== 'undefined' && window.matchMedia(narrowViewportQuery).matches
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia(narrowViewportQuery).matches
+  )
+}
+
+function systemThemeIsDark() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia(systemThemeQuery).matches
+  )
 }
 
 function MenuIcon() {
@@ -67,6 +82,39 @@ function MoonIcon() {
       />
     </svg>
   )
+}
+
+function MonitorIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <rect
+        height="12"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="2"
+        width="18"
+        x="3"
+        y="3"
+      />
+      <path
+        d="M8 21h8M12 15v6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
+
+function ThemeIcon({ theme }: { theme: ThemeMode }) {
+  switch (theme) {
+    case 'light':
+      return <SunIcon />
+    case 'dark':
+      return <MoonIcon />
+    case 'system':
+      return <MonitorIcon />
+  }
 }
 
 function DemoNavigation({ onNavigate }: { onNavigate?: () => void }) {
@@ -120,11 +168,12 @@ function DemoContent() {
 
 export function SiteTemplatePreview() {
   const [narrow, setNarrow] = useState(viewportIsNarrow)
+  const [systemDark, setSystemDark] = useState(systemThemeIsDark)
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [theme, setTheme] = useState<PreviewTheme>('light')
+  const [theme, setTheme] = useState<ThemeMode>('system')
   const viewport: PreviewViewport = narrow ? 'narrow' : 'wide'
-  const themeToggleLabel =
-    theme === 'light' ? '切换示例为深色主题' : '切换示例为浅色主题'
+  const resolvedTheme =
+    theme === 'system' ? (systemDark ? 'dark' : 'light') : theme
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(narrowViewportQuery)
@@ -138,14 +187,24 @@ export function SiteTemplatePreview() {
     return () => mediaQuery.removeEventListener('change', syncViewport)
   }, [])
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(systemThemeQuery)
+    const syncSystemTheme = () => setSystemDark(mediaQuery.matches)
+
+    syncSystemTheme()
+    mediaQuery.addEventListener('change', syncSystemTheme)
+    return () => mediaQuery.removeEventListener('change', syncSystemTheme)
+  }, [])
+
   return (
     <ComponentPreviewCard
       data-component-id="site-template"
       label="SiteTemplate 布局示例"
     >
       <div
-        className={`site-template-preview__viewport site-template-preview__viewport--${viewport}${theme === 'dark' ? ' dark' : ''}`}
-        data-preview-theme={theme}
+        className={`site-template-preview__viewport site-template-preview__viewport--${viewport}${resolvedTheme === 'dark' ? ' dark' : ''}`}
+        data-preview-theme={resolvedTheme}
+        data-preview-theme-mode={theme}
       >
         <div className="site-template-preview__workspace">
           {!narrow ? (
@@ -173,16 +232,14 @@ export function SiteTemplatePreview() {
                 </FrostedLabel>
               </div>
               <FrostedIconButton
-                aria-label={themeToggleLabel}
+                aria-label={`示例${getThemeToggleLabel(theme)}`}
                 className="site-template-preview__theme-button"
                 onClick={() =>
-                  setTheme((currentTheme) =>
-                    currentTheme === 'light' ? 'dark' : 'light',
-                  )
+                  setTheme((currentTheme) => getNextThemeMode(currentTheme))
                 }
                 size="sm"
               >
-                {theme === 'light' ? <SunIcon /> : <MoonIcon />}
+                <ThemeIcon theme={theme} />
               </FrostedIconButton>
             </header>
             <DemoContent />

@@ -82,13 +82,33 @@ assert.match(
 )
 assert.match(
   layoutPreview,
-  /data-preview-theme=\{theme\}/,
-  'the card preview must expose an isolated light and dark theme scope',
+  /from 'weimo-ui-template\/components\/site-template-model'/,
+  'the card preview must share the SiteTemplate theme cycle model',
 )
 assert.match(
   layoutPreview,
-  /setTheme\(\(currentTheme\) =>\s*currentTheme === 'light' \? 'dark' : 'light'/,
-  'the card preview theme button must switch between light and dark themes',
+  /useState<ThemeMode>\('system'\)/,
+  'the card preview must default to the system theme mode',
+)
+assert.match(
+  layoutPreview,
+  /const systemThemeQuery = '\(prefers-color-scheme: dark\)'[\s\S]*addEventListener\('change', syncSystemTheme\)/,
+  'the system theme mode must react to OS theme changes',
+)
+assert.match(
+  layoutPreview,
+  /data-preview-theme=\{resolvedTheme\}[\s\S]*data-preview-theme-mode=\{theme\}/,
+  'the card preview must expose both its resolved and selected theme modes',
+)
+assert.match(
+  layoutPreview,
+  /setTheme\(\(currentTheme\) => getNextThemeMode\(currentTheme\)\)/,
+  'the card preview theme button must cycle through the shared theme modes',
+)
+assert.match(
+  layoutPreview,
+  /case 'system':[\s\S]*<MonitorIcon \/>/,
+  'the card preview must show a monitor icon for the system theme mode',
 )
 assert.match(
   globalStyles,
