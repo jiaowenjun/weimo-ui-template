@@ -1,0 +1,118 @@
+@layer components {
+  .weimo-site-template {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--size-layout-max-width);
+    min-height: 100svh;
+    padding: var(--space-main-offset-top) var(--space-gutter) var(--space-gutter);
+  }
+
+  .weimo-site-template__layout {
+    display: flex;
+    gap: calc(var(--space-gutter) * 1.6);
+  }
+
+  .weimo-site-template__sidebar-space {
+    display: none;
+    width: var(--size-sidebar-width);
+    flex: none;
+  }
+
+  .weimo-site-template__content {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-gutter);
+    color: var(--color-text-primary);
+  }
+
+  .weimo-site-template__sidebar-trigger {
+    display: inline-flex;
+  }
+
+  .weimo-site-template__top-bar-slot {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .weimo-site-template__navigation {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+    overflow: auto;
+  }
+
+  .weimo-site-template__navigation-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .weimo-site-template__navigation-header strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.95rem;
+  }
+
+  .weimo-site-template__navigation-group {
+    display: grid;
+    gap: 7px;
+  }
+
+  .weimo-site-template__navigation-group p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.72rem;
+  }
+
+  .weimo-site-template__navigation-group a {
+    display: flex;
+    min-height: 34px;
+    align-items: center;
+    gap: 8px;
+    padding-inline: 9px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .weimo-site-template__navigation-group a.active {
+    background: color-mix(in srgb, var(--color-bg-hover) 78%, transparent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .weimo-site-template__navigation-group a:hover {
+      background: var(--color-bg-hover);
+    }
+  }
+
+  @media (min-width: 700px) {
+    .weimo-site-template__sidebar-space {
+      display: block;
+    }
+
+    .weimo-site-template__content {
+      max-width: var(--size-content-max-width);
+    }
+
+    .weimo-site-template__sidebar-trigger {
+      display: none;
+    }
+
+    .weimo-site-template__page-title {
+      margin-inline-start: calc(var(--size-sidebar-width) + var(--space-gutter) * 1.6);
+    }
+  }
+
+  @media (max-width: 699px) {
+    .weimo-site-template {
+      padding-inline: var(--space-gutter);
+    }
+  }
+}
