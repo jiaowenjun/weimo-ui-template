@@ -1,3 +1,6 @@
+packages:
+  - site
+
 allowBuilds:
   'weimo-ui-core@https://codeload.github.com/jiaowenjun/weimo-ui-core/tar.gz/0e68bff2283120f4cba05bba0219a2854a26c769': true
 minimumReleaseAgeExclude:

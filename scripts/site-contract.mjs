@@ -1,0 +1,65 @@
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+
+const docsShell = await readFile(
+  new URL('../site/src/docs/shell/docs-shell.tsx', import.meta.url),
+  'utf8',
+)
+const layoutPage = await readFile(
+  new URL('../site/src/docs/pages/layout-example-page.tsx', import.meta.url),
+  'utf8',
+)
+const layoutPreview = await readFile(
+  new URL('../site/src/docs/examples/site-template-preview.tsx', import.meta.url),
+  'utf8',
+)
+const globalStyles = await readFile(
+  new URL('../site/src/styles/global.css', import.meta.url),
+  'utf8',
+)
+const sitePackage = JSON.parse(
+  await readFile(new URL('../site/package.json', import.meta.url), 'utf8'),
+)
+
+assert.match(
+  docsShell,
+  /from 'weimo-ui-template\/components\/site-template'/,
+  'the site shell must consume the public SiteTemplate API',
+)
+assert.match(
+  layoutPage,
+  /from 'weimo-ui-template\/components\/card'/,
+  'the example page must consume the public preview card API',
+)
+assert.match(
+  layoutPage,
+  /<PreviewPage[\s\S]*<SiteTemplatePreview \/>[\s\S]*<\/PreviewPage>/,
+  'the template layout example must stay inside PreviewPage',
+)
+assert.doesNotMatch(
+  layoutPreview,
+  /<SiteTemplate(?:\s|>)/,
+  'the card preview must not mount a second viewport-level SiteTemplate',
+)
+assert.match(
+  globalStyles,
+  /@import "weimo-ui-template\/styles\/base\.css";/,
+  'the site must consume the public template base stylesheet',
+)
+assert.equal(
+  sitePackage.dependencies['react-router'],
+  '8.4.0',
+  'the site must use the shared React Router version',
+)
+assert.equal(
+  sitePackage.dependencies['weimo-ui-template'],
+  'workspace:*',
+  'the self-hosted site must consume the workspace package',
+)
+assert.equal(
+  sitePackage.engines,
+  undefined,
+  'the site must not declare its own Node engine range',
+)
+
+console.log('site contract passed')

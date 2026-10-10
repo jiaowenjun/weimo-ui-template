@@ -9,6 +9,20 @@
 
 模板不依赖 React Router。站点继续拥有自己的路由、catalog、组件示例和 Vite 配置，只把当前页面和导航回调交给模板。
 
+## 示例站点
+
+仓库内的 `site` 是模板自身的文档与布局预览站。站点外壳直接复用
+`SiteTemplate`，并把宽屏常驻侧边栏、窄屏抽屉和单列卡片内容的布局示例
+放在 `PreviewPage` 预览卡片内。
+
+```bash
+pnpm site:dev
+pnpm site:build
+pnpm site:preview
+```
+
+本地开发地址为 `http://localhost:4179/weimo-ui-template/`。
+
 ## 安装
 
 ```bash
