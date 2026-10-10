@@ -42,18 +42,23 @@ assert.match(
 )
 assert.match(
   layoutPreview,
-  /from 'weimo-ui-core\/components\/labeled-switch'/,
-  'the layout example must use the standard labeled Switch control',
+  /<ComponentPreviewCard[\s\S]*label="SiteTemplate 布局示例"/,
+  'the preview card header must show its title',
+)
+assert.doesNotMatch(
+  layoutPreview,
+  /LabeledSwitch|切换预览视口宽度|labelOff="宽屏"|labelOn="窄屏"/,
+  'the preview card must not expose a manual wide/narrow Switch',
 )
 assert.match(
   layoutPreview,
-  /<ComponentPreviewCard[\s\S]*action=\{[\s\S]*<LabeledSwitch[\s\S]*labelOff="宽屏"[\s\S]*labelOn="窄屏"[\s\S]*label="SiteTemplate 布局示例"/,
-  'the preview card header must show its title and the wide/narrow Switch action',
+  /const narrowViewportQuery = '\(max-width: 699px\)'/,
+  'the preview must use the inverse of the SiteTemplate 700px breakpoint',
 )
 assert.match(
   layoutPreview,
-  /checked=\{narrow\}[\s\S]*onCheckedChange=\{\(checked\) =>\s*selectViewport\(checked \? 'narrow' : 'wide'\)/,
-  'the Switch state must control the preview viewport mode',
+  /window\.matchMedia\(narrowViewportQuery\)[\s\S]*addEventListener\('change', syncViewport\)/,
+  'the preview must react to real viewport width changes',
 )
 assert.doesNotMatch(
   layoutPreview,

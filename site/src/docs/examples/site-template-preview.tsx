@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview-card'
 import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
 import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
-import { LabeledSwitch } from 'weimo-ui-core/components/labeled-switch'
 import {
   Card,
   CardDescription,
@@ -18,6 +17,11 @@ type PreviewViewport = 'wide' | 'narrow'
 type PreviewTheme = 'light' | 'dark'
 
 const navigationItems = ['概览', '组件', '设计令牌']
+const narrowViewportQuery = '(max-width: 699px)'
+
+function viewportIsNarrow() {
+  return typeof window !== 'undefined' && window.matchMedia(narrowViewportQuery).matches
+}
 
 function MenuIcon() {
   return (
@@ -115,31 +119,27 @@ function DemoContent() {
 }
 
 export function SiteTemplatePreview() {
-  const [viewport, setViewport] = useState<PreviewViewport>('wide')
+  const [narrow, setNarrow] = useState(viewportIsNarrow)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [theme, setTheme] = useState<PreviewTheme>('light')
-  const narrow = viewport === 'narrow'
+  const viewport: PreviewViewport = narrow ? 'narrow' : 'wide'
   const themeToggleLabel =
     theme === 'light' ? '切换示例为深色主题' : '切换示例为浅色主题'
 
-  function selectViewport(nextViewport: PreviewViewport) {
-    setViewport(nextViewport)
-    setDrawerOpen(nextViewport === 'narrow')
-  }
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(narrowViewportQuery)
+    const syncViewport = () => {
+      setNarrow(mediaQuery.matches)
+      setDrawerOpen(false)
+    }
+
+    syncViewport()
+    mediaQuery.addEventListener('change', syncViewport)
+    return () => mediaQuery.removeEventListener('change', syncViewport)
+  }, [])
 
   return (
     <ComponentPreviewCard
-      action={
-        <LabeledSwitch
-          ariaLabel="切换预览视口宽度"
-          checked={narrow}
-          labelOff="宽屏"
-          labelOn="窄屏"
-          onCheckedChange={(checked) =>
-            selectViewport(checked ? 'narrow' : 'wide')
-          }
-        />
-      }
       data-component-id="site-template"
       label="SiteTemplate 布局示例"
     >
