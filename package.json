@@ -30,10 +30,6 @@
       "types": "./dist/components/site-template/site-template-model.d.ts",
       "import": "./dist/components/site-template/site-template-model.js"
     },
-    "./components/card": {
-      "types": "./dist/components/card/card.d.ts",
-      "import": "./dist/components/card/card.js"
-    },
     "./styles/base.css": {
       "types": "./dist/styles/base.d.css.ts",
       "default": "./dist/styles/base.css"
@@ -41,10 +37,6 @@
     "./styles/site-template.css": {
       "types": "./dist/components/site-template/site-template.d.css.ts",
       "default": "./dist/components/site-template/site-template.css"
-    },
-    "./styles/card.css": {
-      "types": "./dist/components/card/card.d.css.ts",
-      "default": "./dist/components/card/card.css"
     }
   },
   "scripts": {
@@ -62,7 +54,6 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
     "lucide-react": "^1.54.0"
   },
   "peerDependencies": {

@@ -4,7 +4,7 @@
 
 - 宽屏常驻、窄屏抽屉式侧边栏
 - 左侧菜单按钮和页面标题、右侧主题切换按钮的顶部栏
-- 单列内容区与通用预览卡片
+- 单列内容区；页面内的预览卡片由 `weimo-ui-core` 提供
 - `light`、`dark`、`system` 三态主题管理
 
 模板不依赖 React Router。站点继续拥有自己的路由、catalog、组件示例和 Vite 配置，只把当前页面和导航回调交给模板。
@@ -13,7 +13,7 @@
 
 仓库内的 `site` 是模板自身的文档与布局预览站。站点外壳直接复用
 `SiteTemplate`，并把宽屏常驻侧边栏、窄屏抽屉和单列卡片内容的布局示例
-放在 `PreviewPage` 预览卡片内。
+放在 `weimo-ui-core` 的 `ComponentPreviewCard` 预览卡片内。
 
 ```bash
 pnpm site:dev
@@ -97,18 +97,18 @@ export function DocsShell() {
 
 ## 预览卡片
 
-```tsx
-import { PreviewPage } from 'weimo-ui-template/components/card'
+模板不自带卡片组件，页面内的组件示例统一使用 `weimo-ui-core` 的标准卡片：
 
-<PreviewPage
-  componentId="tag-tree"
-  summary="树形标签选择组件"
->
+```tsx
+import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview-card'
+
+<ComponentPreviewCard data-component-id="tag-tree" label="TagTree">
   <TagTree />
-</PreviewPage>
+</ComponentPreviewCard>
 ```
 
-`PreviewPage` 的 `frame="plain"` 会直接渲染内容。更细粒度的页面可使用同一入口导出的 `Card`、`CardFrame`、`CardPanel` 及其插槽组件。
+需要自行组合标题、内容、页脚等卡片结构时，使用
+`weimo-ui-core/components/base-card` 的 `BaseCard`。
 
 ## 依赖边界
 
