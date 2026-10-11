@@ -1,43 +1,46 @@
-# weimo-ui-template
+# Weimo UI Template
 
-`weimo-ui-template` 为 Weimo UI 的文档站和独立预览站提供统一网页壳层：
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![React 19](https://img.shields.io/badge/React-19-61dafb.svg)
 
-- 宽屏常驻、窄屏抽屉式侧边栏
-- 左侧菜单按钮和页面标题、右侧主题切换按钮的顶部栏
-- 单列内容区；页面内的预览卡片由 `weimo-ui-core` 提供
-- `light`、`dark`、`system` 三态主题管理
+**一个组件,给文档站装上完整的站点壳层。**
 
-模板不依赖 React Router。站点继续拥有自己的路由、catalog、组件示例和 Vite 配置，只把当前页面和导航回调交给模板。
+`weimo-ui-template` 为 Weimo UI 系列的文档站与独立预览站提供统一网页壳层:侧边栏、顶部栏、主题切换一次到位,你的站点只需专注写内容。Weimo UI 家族的每个站点外观一致、手感一致,用户在任何一个站里学会的导航方式,到下一个站依然适用。
 
-## 示例站点
+**🔗 在线演示:<https://jiaowenjun.github.io/weimo-ui-template/>**
 
-仓库内的 `site` 是模板自身的文档与布局预览站。站点外壳直接复用
-`SiteTemplate`，并把宽屏常驻侧边栏、窄屏抽屉和单列卡片内容的布局示例
-放在 `weimo-ui-core` 的 `ComponentPreviewCard` 预览卡片内。
+![浅色主题](docs/preview-light.png)
 
-```bash
-pnpm site:dev
-pnpm site:build
-pnpm site:preview
-```
+| 深色主题 | 窄屏抽屉 |
+| :---: | :---: |
+| ![深色主题](docs/preview-dark.png) | ![窄屏抽屉](docs/preview-drawer.png) |
 
-本地开发地址为 `http://localhost:4179/weimo-ui-template/`。
+## 它给你什么
 
-## 安装
+- **响应式站点壳层** —— 宽屏常驻侧边栏,窄屏自动折叠为抽屉式侧边栏,无需自己处理断点。
+- **三态主题管理** —— `light` / `dark` / `system` 一键循环切换,自动监听系统偏好变化并同步 `dark` class。
+- **开箱即用的顶栏** —— 左侧菜单按钮与页面标题、右侧主题切换按钮,还可通过 `topBarActions` 挂载自己的操作。
+- **路由无关** —— 不绑定 React Router。站点保留自己的路由、catalog 与 Vite 配置,只把当前页面和导航回调交给模板。
+- **统一设计语言** —— 基于 [`weimo-ui-core`](https://github.com/jiaowenjun/weimo-ui-core) 的毛玻璃组件构建,与 Weimo UI 组件库视觉一致。
+- **自动文档标题** —— `siteName` 与 `pageTitle` 自动拼装 `document.title`,也可按需关闭自行管理。
+
+## 快速开始
+
+### 1. 安装
 
 ```bash
 pnpm add weimo-ui-template weimo-ui-core @base-ui/react
 ```
 
-从 GitHub 提交安装时，请固定不可变 SHA：
+从 GitHub 提交安装时,请固定不可变 SHA:
 
 ```bash
 pnpm add weimo-ui-template@github:jiaowenjun/weimo-ui-template#<commit-sha>
 ```
 
-## 基础样式
+### 2. 引入基础样式
 
-站点负责选择 token 提供者，并在其后导入模板基础样式：
+站点负责选择 token 提供者,并在其后导入模板基础样式:
 
 ```css
 @import "tailwindcss";
@@ -45,9 +48,11 @@ pnpm add weimo-ui-template@github:jiaowenjun/weimo-ui-template#<commit-sha>
 @import "weimo-ui-template/styles/base.css";
 ```
 
-Markdown 站可以改为导入 `weimo-ui-markdown/styles/tokens.css`；该入口已包含 Core token。
+Markdown 站可以改为导入 `weimo-ui-markdown/styles/tokens.css`;该入口已包含 Core token。
 
-## 接入路由
+### 3. 挂上 SiteTemplate
+
+以 React Router 为例:
 
 ```tsx
 import { Outlet, useMatch, useNavigate } from 'react-router'
@@ -93,11 +98,29 @@ export function DocsShell() {
 }
 ```
 
-`topBarActions`、`sidebarHeader`、`contentClassName` 和 `contentProps` 用于站点级扩展。导航保留真实 `href`；提供 `onNavigate` 时，模板阻止整页跳转并把导航交给站点路由。
+导航项保留真实 `href`(可复制、可中键新开);提供 `onNavigate` 时,模板阻止整页跳转并把导航交给站点路由。
 
-## 预览卡片
+## SiteTemplate 常用 Props
 
-模板不自带卡片组件，页面内的组件示例统一使用 `weimo-ui-core` 的标准卡片：
+| Prop | 说明 |
+| --- | --- |
+| `siteName` *(必填)* | 站点名,展示在侧边栏头部,并参与 `document.title` |
+| `navigationGroups` *(必填)* | 侧边栏导航分组:分组标题 + 导航项(`id` / `label` / `href`) |
+| `activeItemId` | 当前高亮的导航项 id |
+| `onNavigate` | 导航项点击回调;提供后由站点路由接管跳转 |
+| `pageTitle` | 顶栏与文档标题显示的当前页标题 |
+| `defaultTheme` / `theme` / `onThemeChange` | 主题控制:非受控默认值,或受控模式 + 变更回调 |
+| `topBarActions` | 顶栏右侧自定义内容 |
+| `sidebarHeader` | 侧边栏头部自定义内容 |
+| `manageDocumentTitle` | 是否自动维护 `document.title`,默认开启 |
+| `scrollOnNavigate` | 导航后是否将内容区滚回顶部 |
+| `contentClassName` / `contentProps` / `mainClassName` | 内容区扩展点 |
+
+主题循环顺序为 `light → dark → system`,需要自行组合主题 UI 时,可从 `weimo-ui-template/components/site-template-model` 引入 `ThemeMode`、`getNextThemeMode` 等工具。单独渲染侧边栏可使用同入口导出的 `SiteNavigation`。
+
+## 页面内组件示例
+
+模板不自带卡片组件,页面内的组件示例统一使用 `weimo-ui-core` 的标准预览卡:
 
 ```tsx
 import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview-card'
@@ -107,12 +130,22 @@ import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview
 </ComponentPreviewCard>
 ```
 
-需要自行组合标题、内容、页脚等卡片结构时，使用
-`weimo-ui-core/components/base-card` 的 `BaseCard`。
+需要自行组合标题、内容、页脚等卡片结构时,使用 `weimo-ui-core/components/base-card` 的 `BaseCard`。
 
-## 依赖边界
+## 本地跑起来
 
-- 模板只使用 `weimo-ui-core` 的公开 package exports。
-- 模板不查询或覆盖 Core 的内部 BEM 选择器。
-- React、React DOM、Base UI 和 Core 为 peer dependency，由站点提供。
-- 各站点的领域样式继续留在各自仓库，不进入模板。
+仓库内的 `site` 就是模板自身的文档与布局预览站,直接复用 `SiteTemplate`:
+
+```bash
+pnpm site:dev      # 开发,http://localhost:4179/weimo-ui-template/
+pnpm site:build    # 构建
+pnpm site:preview  # 预览构建产物
+```
+
+## 相关包
+
+- [`weimo-ui-core`](https://github.com/jiaowenjun/weimo-ui-core) —— Weimo UI 基础组件与设计 token,本模板的构建基座
+
+## 许可证
+
+[MIT](LICENSE)
