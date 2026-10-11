@@ -32,10 +32,10 @@
 pnpm add weimo-ui-template weimo-ui-core @base-ui/react
 ```
 
-从 GitHub 提交安装时,请固定不可变 SHA:
+如需固定版本,请使用 npm 版本号:
 
 ```bash
-pnpm add weimo-ui-template@github:jiaowenjun/weimo-ui-template#<commit-sha>
+pnpm add weimo-ui-template@0.1.1
 ```
 
 ### 2. 引入基础样式
