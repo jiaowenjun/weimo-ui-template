@@ -21,6 +21,10 @@ const mainEntry = await readFile(
   new URL('../site/src/main.tsx', import.meta.url),
   'utf8',
 )
+const siteHtml = await readFile(
+  new URL('../site/index.html', import.meta.url),
+  'utf8',
+)
 const sitePackage = JSON.parse(
   await readFile(new URL('../site/package.json', import.meta.url), 'utf8'),
 )
@@ -134,6 +138,26 @@ assert.match(
   globalStyles,
   /@import "weimo-ui-template\/styles\/base\.css";/,
   'the site must consume the public template base stylesheet',
+)
+assert.match(
+  siteHtml,
+  /html\s*{[^}]*background-color:\s*hsl\(40 16% 96%\);[^}]*}/s,
+  'the document must provide the light page background before site CSS loads',
+)
+assert.match(
+  siteHtml,
+  /html\.dark\s*{[^}]*background-color:\s*hsl\(0 0% 7%\);[^}]*color-scheme:\s*dark;[^}]*}/s,
+  'the document must provide the dark page background before site CSS loads',
+)
+assert.match(
+  siteHtml,
+  /document\.documentElement\.classList\.toggle\(\s*'dark',\s*window\.matchMedia\('\(prefers-color-scheme: dark\)'\)\.matches,?\s*\)/s,
+  'the document must resolve the system theme before React mounts',
+)
+assert.ok(
+  siteHtml.indexOf("window.matchMedia('(prefers-color-scheme: dark)')") <
+    siteHtml.indexOf('<script type="module" src="./src/main.tsx"></script>'),
+  'theme initialization must run before the application module',
 )
 assert.ok(
   mainEntry.indexOf("import './styles/global.css'") <
