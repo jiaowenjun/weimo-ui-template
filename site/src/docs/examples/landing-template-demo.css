@@ -1,0 +1,4 @@
+/* LandingTemplate 是整页模板,需要退出 base.css 为文档页准备的 #root 槽边 */
+#root:has(.landing-template) {
+  padding-inline: 0;
+}

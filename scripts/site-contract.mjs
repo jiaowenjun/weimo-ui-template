@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-const docsShell = await readFile(
+const shellSource = await readFile(
   new URL('../site/src/docs/shell/docs-shell.tsx', import.meta.url),
   'utf8',
 )
@@ -30,7 +30,7 @@ const sitePackage = JSON.parse(
 )
 
 assert.match(
-  docsShell,
+  shellSource,
   /from 'weimo-ui-template\/components\/site-template'/,
   'the site shell must consume the public SiteTemplate API',
 )
@@ -178,6 +178,27 @@ assert.equal(
   sitePackage.engines,
   undefined,
   'the site must not declare its own Node engine range',
+)
+
+const landingDemo = await readFile(
+  new URL('../site/src/docs/examples/landing-template-demo.tsx', import.meta.url),
+  'utf8',
+)
+
+assert.match(
+  landingDemo,
+  /from 'weimo-ui-template\/components\/landing-template'/,
+  'the landing demo must consume the public LandingTemplate API',
+)
+assert.match(
+  landingDemo,
+  /<LandingTemplate\b/,
+  'the landing demo must render the LandingTemplate directly',
+)
+assert.match(
+  shellSource,
+  /id: 'landing-template'/,
+  'the docs shell must link to the landing demo',
 )
 
 console.log('site contract passed')

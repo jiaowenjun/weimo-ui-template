@@ -22,6 +22,18 @@
     "LICENSE"
   ],
   "exports": {
+    "./components/landing-template": {
+      "types": "./dist/components/landing-template/landing-template.d.ts",
+      "import": "./dist/components/landing-template/landing-template.js"
+    },
+    "./components/landing-template-model": {
+      "types": "./dist/components/landing-template/landing-template-model.d.ts",
+      "import": "./dist/components/landing-template/landing-template-model.js"
+    },
+    "./styles/landing-template.css": {
+      "types": "./dist/components/landing-template/landing-template.d.css.ts",
+      "default": "./dist/components/landing-template/landing-template.css"
+    },
     "./components/site-template": {
       "types": "./dist/components/site-template/site-template.d.ts",
       "import": "./dist/components/site-template/site-template.js"
