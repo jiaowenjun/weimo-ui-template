@@ -1,0 +1,32 @@
+@layer components {
+  .weimo-mini-site-template {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--size-layout-max-width);
+    min-height: 100svh;
+    padding: var(--space-main-offset-top) var(--space-gutter) var(--space-gutter);
+  }
+
+  .weimo-mini-site-template__content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-gutter);
+    max-width: var(--size-content-max-width);
+    margin-inline: auto;
+    color: var(--color-text-primary);
+  }
+
+  .weimo-mini-site-template__top-bar-slot {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 699px) {
+    .weimo-mini-site-template {
+      padding-inline: var(--space-gutter);
+    }
+  }
+}

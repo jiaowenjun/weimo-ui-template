@@ -1,0 +1,156 @@
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from 'react'
+import { Monitor, Moon, Sun } from 'lucide-react'
+
+import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
+import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
+import { TopBar } from 'weimo-ui-core/components/top-bar'
+import { cn } from 'weimo-ui-core/lib/utils'
+
+import {
+  getNextThemeMode,
+  getSiteDocumentTitle,
+  getThemeToggleLabel,
+  type ThemeMode,
+} from '../site-template/site-template-model'
+import './mini-site-template.css'
+
+export type MiniSiteTemplateProps = {
+  children?: ReactNode
+  contentClassName?: string
+  contentProps?: Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'className'>
+  defaultTheme?: ThemeMode
+  mainClassName?: string
+  manageDocumentTitle?: boolean
+  onThemeChange?: (theme: ThemeMode) => void
+  pageTitle?: string
+  siteName: string
+  theme?: ThemeMode
+  topBarActions?: ReactNode
+}
+
+function ThemeIcon({ theme }: { theme: ThemeMode }) {
+  switch (theme) {
+    case 'light':
+      return <Sun />
+    case 'dark':
+      return <Moon />
+    case 'system':
+      return <Monitor />
+  }
+}
+
+function useTheme({
+  defaultTheme,
+  onThemeChange,
+  theme: controlledTheme,
+}: {
+  defaultTheme: ThemeMode
+  onThemeChange?: (theme: ThemeMode) => void
+  theme?: ThemeMode
+}) {
+  const [internalTheme, setInternalTheme] = useState(defaultTheme)
+  const theme = controlledTheme ?? internalTheme
+
+  useEffect(() => {
+    if (theme !== 'system') {
+      document.documentElement.classList.toggle('dark', theme === 'dark')
+      return
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const syncSystemTheme = () => {
+      document.documentElement.classList.toggle('dark', mediaQuery.matches)
+    }
+
+    syncSystemTheme()
+    mediaQuery.addEventListener('change', syncSystemTheme)
+
+    return () => mediaQuery.removeEventListener('change', syncSystemTheme)
+  }, [theme])
+
+  const cycleTheme = useCallback(() => {
+    const nextTheme = getNextThemeMode(theme)
+
+    if (controlledTheme === undefined) {
+      setInternalTheme(nextTheme)
+    }
+
+    onThemeChange?.(nextTheme)
+  }, [controlledTheme, onThemeChange, theme])
+
+  return { cycleTheme, theme }
+}
+
+/**
+ * MiniSiteTemplate:无侧边栏的单页站壳(顶栏 + 居中内容)。
+ * 与 SiteTemplate 同源的顶栏/主题/文档标题约定;顶栏左侧显示 pageTitle,
+ * 未提供时回退 siteName。
+ */
+export function MiniSiteTemplate({
+  children,
+  contentClassName,
+  contentProps,
+  defaultTheme = 'system',
+  mainClassName,
+  manageDocumentTitle = true,
+  onThemeChange,
+  pageTitle,
+  siteName,
+  theme: controlledTheme,
+  topBarActions,
+}: MiniSiteTemplateProps) {
+  const { cycleTheme, theme } = useTheme({
+    defaultTheme,
+    onThemeChange,
+    theme: controlledTheme,
+  })
+
+  useEffect(() => {
+    if (manageDocumentTitle) {
+      document.title = getSiteDocumentTitle(siteName, pageTitle)
+    }
+  }, [manageDocumentTitle, pageTitle, siteName])
+
+  const heading = pageTitle ?? siteName
+  const leftSlot = (
+    <div className="weimo-mini-site-template__top-bar-slot">
+      <FrostedLabel key={heading} size="lg">
+        {heading}
+      </FrostedLabel>
+    </div>
+  )
+  const rightSlot = (
+    <div className="weimo-mini-site-template__top-bar-slot">
+      {topBarActions}
+      <FrostedIconButton
+        aria-label={getThemeToggleLabel(theme)}
+        onClick={cycleTheme}
+      >
+        <ThemeIcon theme={theme} />
+      </FrostedIconButton>
+    </div>
+  )
+
+  return (
+    <>
+      <TopBar leftSlot={leftSlot} rightSlot={rightSlot} />
+
+      <main className={cn('weimo-mini-site-template', mainClassName)}>
+        <div
+          {...contentProps}
+          className={cn('weimo-mini-site-template__content', contentClassName)}
+        >
+          {children}
+        </div>
+      </main>
+    </>
+  )
+}
+
+export type { ThemeMode } from '../site-template/site-template-model'

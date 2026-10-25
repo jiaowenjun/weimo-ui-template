@@ -1,6 +1,6 @@
 {
   "name": "weimo-ui-template",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Reusable site shell and content primitives for Weimo UI documentation sites.",
   "type": "module",
   "license": "MIT",
@@ -34,6 +34,10 @@
       "types": "./dist/components/landing-template/landing-template.d.css.ts",
       "default": "./dist/components/landing-template/landing-template.css"
     },
+    "./components/mini-site-template": {
+      "types": "./dist/components/mini-site-template/mini-site-template.d.ts",
+      "import": "./dist/components/mini-site-template/mini-site-template.js"
+    },
     "./components/site-template": {
       "types": "./dist/components/site-template/site-template.d.ts",
       "import": "./dist/components/site-template/site-template.js"
@@ -49,6 +53,10 @@
     "./styles/site-template.css": {
       "types": "./dist/components/site-template/site-template.d.css.ts",
       "default": "./dist/components/site-template/site-template.css"
+    },
+    "./styles/mini-site-template.css": {
+      "types": "./dist/components/mini-site-template/mini-site-template.d.css.ts",
+      "default": "./dist/components/mini-site-template/mini-site-template.css"
     }
   },
   "scripts": {

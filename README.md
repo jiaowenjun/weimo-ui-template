@@ -118,6 +118,20 @@ export function DocsShell() {
 
 主题循环顺序为 `light → dark → system`,需要自行组合主题 UI 时,可从 `weimo-ui-template/components/site-template-model` 引入 `ThemeMode`、`getNextThemeMode` 等工具。单独渲染侧边栏可使用同入口导出的 `SiteNavigation`。
 
+## MiniSiteTemplate 单页站壳
+
+`MiniSiteTemplate` 是 `SiteTemplate` 的无侧边栏形态:顶栏 + 居中内容,没有导航抽屉与侧栏占位。适合只有一个页面的站点(单组件演示站、单页文档)。
+
+```tsx
+import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-template'
+
+<MiniSiteTemplate pageTitle="WDF读写视图" siteName="weimo-ui-editor">
+  <p>内容</p>
+</MiniSiteTemplate>
+```
+
+与 `SiteTemplate` 同源的顶栏、主题循环与 `document.title` 约定;顶栏左侧显示 `pageTitle`,未提供时回退 `siteName`。支持 `siteName`、`pageTitle`、`defaultTheme` / `theme` / `onThemeChange`、`topBarActions`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
+
 ## LandingTemplate 页面模板
 
 `LandingTemplate` 是**整页级**产品落地页模板:返回导航 + 居中 hero(多行标题 / 副标题 / CTA 按钮行 / 宽幅截图)+ 双栏 purpose 区(自适应画廊 + 文案与功能清单)+ 品牌页脚 + 法律行。与 `SiteTemplate` 的站壳不同,它渲染完整页面,适合独立路由(演示:`/examples/landing-template`)。
