@@ -8,7 +8,6 @@ import {
 import { Monitor, Moon, Sun } from 'lucide-react'
 
 import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
-import { FrostedLabel } from 'weimo-ui-core/components/frosted-label'
 import { TopBar } from 'weimo-ui-core/components/top-bar'
 import { cn } from 'weimo-ui-core/lib/utils'
 
@@ -92,9 +91,9 @@ function useTheme({
 
 /**
  * MiniSiteTemplate:无侧边栏的单页站壳(顶栏 + 全宽内容)。
- * 与 SiteTemplate 同源的顶栏/主题/文档标题约定;顶栏左侧显示 pageTitle,
- * 未提供时回退 siteName,`topBarLeading` 渲染在标题标签之前(与右侧
- * `topBarActions` 对称的前置插槽,模板不赋予其导航语义)。
+ * 与 SiteTemplate 同源的主题与文档标题约定;pageTitle/siteName 仅驱动
+ * document.title,顶栏左侧只渲染 `topBarLeading` 前置插槽(与右侧
+ * `topBarActions` 对称,模板不赋予其导航语义)。
  * headline/subheadline 提供时,标题区与内容一起包进 hero wrapper,
  * 标题区渲染居中主标题与副标题(LandingTemplate hero 的缩小版)。
  */
@@ -126,13 +125,9 @@ export function MiniSiteTemplate({
     }
   }, [manageDocumentTitle, pageTitle, siteName])
 
-  const heading = pageTitle ?? siteName
   const leftSlot = (
     <div className="weimo-mini-site-template__top-bar-slot">
       {topBarLeading}
-      <FrostedLabel key={heading} size="lg">
-        {heading}
-      </FrostedLabel>
     </div>
   )
   const rightSlot = (

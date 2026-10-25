@@ -130,7 +130,7 @@ import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-templat
 </MiniSiteTemplate>
 ```
 
-与 `SiteTemplate` 同源的顶栏、主题循环与 `document.title` 约定;顶栏左侧显示 `pageTitle`,未提供时回退 `siteName`,可选 `topBarLeading` 渲染在标题标签之前(与右侧 `topBarActions` 对称的前置插槽,如返回按钮)。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题(取 `LandingTemplate` hero 的字重/字距配方,按单页站尺度缩放),用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`topBarActions`、`topBarLeading`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
+与 `SiteTemplate` 同源的主题循环与 `document.title` 约定,`pageTitle` / `siteName` 仅驱动 `document.title`;顶栏左侧不显示页面标题,只渲染可选的 `topBarLeading` 前置插槽(与右侧 `topBarActions` 对称,如返回按钮)。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题(取 `LandingTemplate` hero 的字重/字距配方,按单页站尺度缩放),用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`topBarActions`、`topBarLeading`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
 
 ## LandingTemplate 页面模板
 
