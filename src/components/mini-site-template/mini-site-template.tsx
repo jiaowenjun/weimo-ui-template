@@ -95,8 +95,8 @@ function useTheme({
  * 与 SiteTemplate 同源的顶栏/主题/文档标题约定;顶栏左侧显示 pageTitle,
  * 未提供时回退 siteName,`topBarLeading` 渲染在标题标签之前(与右侧
  * `topBarActions` 对称的前置插槽,模板不赋予其导航语义)。
- * headline/subheadline 提供时,在内容区顶部渲染
- * 居中主标题与副标题(LandingTemplate hero 的缩小版)。
+ * headline/subheadline 提供时,标题区与内容一起包进 hero wrapper,
+ * 标题区渲染居中主标题与副标题(LandingTemplate hero 的缩小版)。
  */
 export function MiniSiteTemplate({
   children,
@@ -157,20 +157,24 @@ export function MiniSiteTemplate({
           className={cn('weimo-mini-site-template__content', contentClassName)}
         >
           {headline || subheadline ? (
-            <header className="weimo-mini-site-template__hero">
-              {headline ? (
-                <h1 className="weimo-mini-site-template__headline">
-                  {headline}
-                </h1>
-              ) : null}
-              {subheadline ? (
-                <p className="weimo-mini-site-template__subheadline">
-                  {subheadline}
-                </p>
-              ) : null}
-            </header>
-          ) : null}
-          {children}
+            <div className="weimo-mini-site-template__hero">
+              <header className="weimo-mini-site-template__hero-head">
+                {headline ? (
+                  <h1 className="weimo-mini-site-template__headline">
+                    {headline}
+                  </h1>
+                ) : null}
+                {subheadline ? (
+                  <p className="weimo-mini-site-template__subheadline">
+                    {subheadline}
+                  </p>
+                ) : null}
+              </header>
+              {children}
+            </div>
+          ) : (
+            children
+          )}
         </div>
       </main>
     </>
