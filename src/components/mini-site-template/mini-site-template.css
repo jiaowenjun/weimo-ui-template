@@ -26,7 +26,7 @@
     gap: 8px;
   }
 
-  /* hero wrapper:包住标题区与内容,纵向间距与内容列 gap 同步;
+  /* hero wrapper:包住标题区与内容,自身零 padding,纵向衔接统一由 gap 驱动;
    * 限宽 content-max-width 居中,全宽壳内收拢标题与卡片的阅读宽度 */
   .weimo-mini-site-template__hero {
     display: flex;
@@ -38,18 +38,20 @@
     margin-inline: auto;
   }
 
-  /* 居中标题区,取 LandingTemplate hero 的字重/字距配方,按单页站尺度缩放 */
+  /* 居中标题区,取 LandingTemplate hero 的字重/字距配方,按单页站尺度缩放;
+   * 零 padding,节奏由 margin 驱动:上 64 抬出顶距,下 36 与 hero gap 叠出标题→动作间距 */
   .weimo-mini-site-template__hero-head {
-    padding-block: 40px 8px;
+    padding-block: 0;
+    margin-block: 64px 36px;
     text-align: center;
   }
 
   .weimo-mini-site-template__headline {
     margin: 0;
     font-size: clamp(24px, 5vw, 34px);
-    line-height: 1.25;
+    line-height: 1.1;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     color: var(--color-text-primary);
   }
 
@@ -57,7 +59,7 @@
     max-width: 44em;
     margin: 12px auto 0;
     font-size: var(--font-size-md);
-    line-height: 1.7;
+    line-height: 1.4;
     font-weight: 400;
     color: var(--color-text-secondary);
   }
