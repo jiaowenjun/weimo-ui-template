@@ -34,6 +34,7 @@ export type MiniSiteTemplateProps = {
   subheadline?: ReactNode
   theme?: ThemeMode
   topBarActions?: ReactNode
+  topBarLeading?: ReactNode
 }
 
 function ThemeIcon({ theme }: { theme: ThemeMode }) {
@@ -90,9 +91,11 @@ function useTheme({
 }
 
 /**
- * MiniSiteTemplate:无侧边栏的单页站壳(顶栏 + 居中内容)。
+ * MiniSiteTemplate:无侧边栏的单页站壳(顶栏 + 全宽内容)。
  * 与 SiteTemplate 同源的顶栏/主题/文档标题约定;顶栏左侧显示 pageTitle,
- * 未提供时回退 siteName。headline/subheadline 提供时,在内容区顶部渲染
+ * 未提供时回退 siteName,`topBarLeading` 渲染在标题标签之前(与右侧
+ * `topBarActions` 对称的前置插槽,模板不赋予其导航语义)。
+ * headline/subheadline 提供时,在内容区顶部渲染
  * 居中主标题与副标题(LandingTemplate hero 的缩小版)。
  */
 export function MiniSiteTemplate({
@@ -109,6 +112,7 @@ export function MiniSiteTemplate({
   subheadline,
   theme: controlledTheme,
   topBarActions,
+  topBarLeading,
 }: MiniSiteTemplateProps) {
   const { cycleTheme, theme } = useTheme({
     defaultTheme,
@@ -125,6 +129,7 @@ export function MiniSiteTemplate({
   const heading = pageTitle ?? siteName
   const leftSlot = (
     <div className="weimo-mini-site-template__top-bar-slot">
+      {topBarLeading}
       <FrostedLabel key={heading} size="lg">
         {heading}
       </FrostedLabel>

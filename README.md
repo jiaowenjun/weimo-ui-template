@@ -120,7 +120,7 @@ export function DocsShell() {
 
 ## MiniSiteTemplate 单页站壳
 
-`MiniSiteTemplate` 是 `SiteTemplate` 的无侧边栏形态:顶栏 + 居中内容,没有导航抽屉与侧栏占位。适合只有一个页面的站点(单组件演示站、单页文档)。
+`MiniSiteTemplate` 是 `SiteTemplate` 的无侧边栏形态:顶栏 + 全宽内容(不限布局最大宽度,顶栏同步对齐),没有导航抽屉与侧栏占位。适合只有一个页面的站点(单组件演示站、单页文档)。
 
 ```tsx
 import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-template'
@@ -130,7 +130,7 @@ import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-templat
 </MiniSiteTemplate>
 ```
 
-与 `SiteTemplate` 同源的顶栏、主题循环与 `document.title` 约定;顶栏左侧显示 `pageTitle`,未提供时回退 `siteName`。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题(取 `LandingTemplate` hero 的字重/字距配方,按单页站尺度缩放),用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`topBarActions`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
+与 `SiteTemplate` 同源的顶栏、主题循环与 `document.title` 约定;顶栏左侧显示 `pageTitle`,未提供时回退 `siteName`,可选 `topBarLeading` 渲染在标题标签之前(与右侧 `topBarActions` 对称的前置插槽,如返回按钮)。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题(取 `LandingTemplate` hero 的字重/字距配方,按单页站尺度缩放),用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`topBarActions`、`topBarLeading`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
 
 ## LandingTemplate 页面模板
 
