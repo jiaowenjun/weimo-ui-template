@@ -85,4 +85,32 @@ describe('MiniSiteTemplate', () => {
       expect(document.documentElement).toHaveClass('dark')
     })
   })
+
+  it('hides the theme toggle while keeping the system theme in sync', async () => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: vi.fn().mockReturnValue({
+        addEventListener: vi.fn(),
+        matches: true,
+        removeEventListener: vi.fn(),
+      }),
+    })
+
+    render(
+      <MiniSiteTemplate
+        showThemeToggle={false}
+        siteName="weimo-ui-editor"
+        topBarActions={<button type="button">GitHub</button>}
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'GitHub' })).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: /主题/ }),
+    ).not.toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(document.documentElement).toHaveClass('dark')
+    })
+  })
 })

@@ -29,6 +29,7 @@ export type MiniSiteTemplateProps = {
   manageDocumentTitle?: boolean
   onThemeChange?: (theme: ThemeMode) => void
   pageTitle?: string
+  showThemeToggle?: boolean
   siteName: string
   subheadline?: ReactNode
   theme?: ThemeMode
@@ -94,6 +95,9 @@ function useTheme({
  * 与 SiteTemplate 同源的主题与文档标题约定;pageTitle/siteName 仅驱动
  * document.title,顶栏左侧只渲染 `topBarLeading` 前置插槽(与右侧
  * `topBarActions` 对称,模板不赋予其导航语义)。
+ * `showThemeToggle={false}` 隐藏右侧主题切换按钮,但主题状态仍按
+ * defaultTheme/theme 同步到 html.dark(默认跟随系统),站点可把该位置
+ * 让给自己的 topBarActions。
  * headline/subheadline 提供时,标题区与内容一起包进 hero wrapper,
  * 标题区渲染居中主标题与副标题(LandingTemplate hero 的缩小版)。
  */
@@ -107,6 +111,7 @@ export function MiniSiteTemplate({
   manageDocumentTitle = true,
   onThemeChange,
   pageTitle,
+  showThemeToggle = true,
   siteName,
   subheadline,
   theme: controlledTheme,
@@ -133,12 +138,14 @@ export function MiniSiteTemplate({
   const rightSlot = (
     <div className="weimo-mini-site-template__top-bar-slot">
       {topBarActions}
-      <FrostedIconButton
-        aria-label={getThemeToggleLabel(theme)}
-        onClick={cycleTheme}
-      >
-        <ThemeIcon theme={theme} />
-      </FrostedIconButton>
+      {showThemeToggle ? (
+        <FrostedIconButton
+          aria-label={getThemeToggleLabel(theme)}
+          onClick={cycleTheme}
+        >
+          <ThemeIcon theme={theme} />
+        </FrostedIconButton>
+      ) : null}
     </div>
   )
 
