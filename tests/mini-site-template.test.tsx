@@ -37,21 +37,16 @@ beforeEach(() => {
 })
 
 describe('MiniSiteTemplate', () => {
-  it('renders content and the page title, falling back to the site name', () => {
-    const { rerender } = render(
-      <MiniSiteTemplate pageTitle="WDF读写视图" siteName="weimo-ui-editor">
+  it('renders content without a top-bar title label', () => {
+    render(
+      <MiniSiteTemplate pageTitle="WDF读写卡片" siteName="weimo-ui-editor">
         <p>Content</p>
       </MiniSiteTemplate>,
     )
 
     expect(screen.getByText('Content')).toBeInTheDocument()
-    expect(screen.getByText('WDF读写视图')).toBeInTheDocument()
-    expect(
-      screen.queryByRole('heading'),
-    ).not.toBeInTheDocument()
-
-    rerender(<MiniSiteTemplate siteName="weimo-ui-editor" />)
-    expect(screen.getByText('weimo-ui-editor')).toBeInTheDocument()
+    expect(screen.queryByText('WDF读写卡片')).not.toBeInTheDocument()
+    expect(screen.queryByText('weimo-ui-editor')).not.toBeInTheDocument()
   })
 
   it('renders the optional headline and subheadline above the content', () => {
