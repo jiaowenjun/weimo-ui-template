@@ -46,9 +46,31 @@ describe('MiniSiteTemplate', () => {
 
     expect(screen.getByText('Content')).toBeInTheDocument()
     expect(screen.getByText('WDF读写视图')).toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading'),
+    ).not.toBeInTheDocument()
 
     rerender(<MiniSiteTemplate siteName="weimo-ui-editor" />)
     expect(screen.getByText('weimo-ui-editor')).toBeInTheDocument()
+  })
+
+  it('renders the optional headline and subheadline above the content', () => {
+    render(
+      <MiniSiteTemplate
+        headline="点开即写,收起即读"
+        siteName="weimo-ui-editor"
+        subheadline="同一份 WDF 数据驱动阅读与编辑。"
+      >
+        <p>Content</p>
+      </MiniSiteTemplate>,
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '点开即写,收起即读' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('同一份 WDF 数据驱动阅读与编辑。'),
+    ).toBeInTheDocument()
   })
 
   it('manages the document title and theme cycle', async () => {

@@ -25,11 +25,13 @@ export type MiniSiteTemplateProps = {
   contentClassName?: string
   contentProps?: Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'className'>
   defaultTheme?: ThemeMode
+  headline?: ReactNode
   mainClassName?: string
   manageDocumentTitle?: boolean
   onThemeChange?: (theme: ThemeMode) => void
   pageTitle?: string
   siteName: string
+  subheadline?: ReactNode
   theme?: ThemeMode
   topBarActions?: ReactNode
 }
@@ -90,18 +92,21 @@ function useTheme({
 /**
  * MiniSiteTemplate:无侧边栏的单页站壳(顶栏 + 居中内容)。
  * 与 SiteTemplate 同源的顶栏/主题/文档标题约定;顶栏左侧显示 pageTitle,
- * 未提供时回退 siteName。
+ * 未提供时回退 siteName。headline/subheadline 提供时,在内容区顶部渲染
+ * 居中主标题与副标题(LandingTemplate hero 的缩小版)。
  */
 export function MiniSiteTemplate({
   children,
   contentClassName,
   contentProps,
   defaultTheme = 'system',
+  headline,
   mainClassName,
   manageDocumentTitle = true,
   onThemeChange,
   pageTitle,
   siteName,
+  subheadline,
   theme: controlledTheme,
   topBarActions,
 }: MiniSiteTemplateProps) {
@@ -146,6 +151,20 @@ export function MiniSiteTemplate({
           {...contentProps}
           className={cn('weimo-mini-site-template__content', contentClassName)}
         >
+          {headline || subheadline ? (
+            <header className="weimo-mini-site-template__hero">
+              {headline ? (
+                <h1 className="weimo-mini-site-template__headline">
+                  {headline}
+                </h1>
+              ) : null}
+              {subheadline ? (
+                <p className="weimo-mini-site-template__subheadline">
+                  {subheadline}
+                </p>
+              ) : null}
+            </header>
+          ) : null}
           {children}
         </div>
       </main>
