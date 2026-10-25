@@ -26,12 +26,16 @@
     gap: 8px;
   }
 
-  /* hero wrapper:包住标题区与内容,纵向间距与内容列 gap 同步 */
+  /* hero wrapper:包住标题区与内容,纵向间距与内容列 gap 同步;
+   * 限宽 content-max-width 居中,全宽壳内收拢标题与卡片的阅读宽度 */
   .weimo-mini-site-template__hero {
     display: flex;
+    width: 100%;
     min-width: 0;
+    max-width: var(--size-content-max-width);
     flex-direction: column;
     gap: var(--space-gutter);
+    margin-inline: auto;
   }
 
   /* 居中标题区,取 LandingTemplate hero 的字重/字距配方,按单页站尺度缩放 */
