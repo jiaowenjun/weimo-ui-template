@@ -1,6 +1,8 @@
 export const examplePath = '/examples/site-template'
 export const miniExamplePath = '/examples/mini-site-template'
 export const iframeFollowExamplePath = '/examples/site-template-iframe-follow'
+export const iframeFollowSolidExamplePath =
+  '/examples/site-template-iframe-follow-solid'
 export const siteTemplatePreviewPath = '/previews/site-template'
 
 export const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '')
@@ -27,6 +29,10 @@ function withBasename(path: string) {
 
 export function iframeFollowExampleHref() {
   return withBasename(iframeFollowExamplePath)
+}
+
+export function iframeFollowSolidExampleHref() {
+  return withBasename(iframeFollowSolidExamplePath)
 }
 
 export function siteTemplatePreviewHref() {

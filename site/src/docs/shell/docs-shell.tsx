@@ -10,6 +10,8 @@ import {
   examplePath,
   iframeFollowExampleHref,
   iframeFollowExamplePath,
+  iframeFollowSolidExampleHref,
+  iframeFollowSolidExamplePath,
   miniExampleHref,
   miniExamplePath,
 } from '../routes'
@@ -40,6 +42,11 @@ const navigationGroups: SiteNavigationGroup[] = [
         href: iframeFollowExampleHref(),
         label: 'SiteTemplate · iframe 跟随',
       },
+      {
+        id: 'site-template-iframe-follow-solid',
+        href: iframeFollowSolidExampleHref(),
+        label: 'SiteTemplate · iframe 跟随(实底)',
+      },
     ],
   },
 ]
@@ -48,11 +55,14 @@ export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
   const iframeFollowMatch = useMatch(iframeFollowExamplePath)
+  const iframeFollowSolidMatch = useMatch(iframeFollowSolidExamplePath)
   const activeItemId = layoutMatch
     ? 'site-template'
     : iframeFollowMatch
       ? 'site-template-iframe-follow'
-      : undefined
+      : iframeFollowSolidMatch
+        ? 'site-template-iframe-follow-solid'
+        : undefined
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
@@ -62,6 +72,9 @@ export function DocsShell() {
     }
     if (item.id === 'site-template-iframe-follow') {
       navigate(iframeFollowExamplePath)
+    }
+    if (item.id === 'site-template-iframe-follow-solid') {
+      navigate(iframeFollowSolidExamplePath)
     }
   }
 
