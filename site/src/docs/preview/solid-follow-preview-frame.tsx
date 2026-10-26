@@ -12,12 +12,11 @@ type SolidFollowPreviewFrameProps = {
   title: string
 }
 
-/** 实底跟随预览壳:与跟随壳同机制(百分比视觉宽 + 恒定倍率派生布局宽),
-    差异在样式职责划分——测量外壳透明,黑色背景与圆角由宽度受控的
-    stage 自持,预览区连同底色全程 1:1 跟随滑块(对齐百分比视口卡片的
-    观感);外壳保持满宽承担测量,避免视觉宽反噬可用宽基准。
-    缩放比例按 BASE_WIDTH 固定:卡片比基准宽时预览大小恒定(不随卡片
-    放大,画面居中留白),比基准窄时单向降级为 fit 保证完整可见。 */
+/** 实底跟随预览壳:百分比视觉宽 + 固定倍率派生布局宽;测量外壳透明,
+    黑色背景与圆角由宽度受控的 stage 自持,预览区连同底色全程 1:1
+    跟随滑块。缩放比例恒为 BASE_WIDTH ÷ maxLayoutWidth,任何卡片宽度
+    下不变;卡片装不下基准时右端点对应的布局宽动态收紧(100% 档
+    视觉恰好满卡),断点位置随之上移。 */
 
 /* 固定缩放基准:100% 档视觉宽的上限,与演示卡内容最大宽度 token 对应
    (700px − 卡片 padding/边框 ≈ 672);卡片达上限时预览正好满卡 */
@@ -56,15 +55,19 @@ export function SolidFollowPreviewFrame({
   }, [])
 
   const ratio = Math.min(percent, 100) / 100
-  /* 固定缩放:基准宽(100% 档视觉宽的上限)以下按可用宽 fit,以上锁定
-     基准——宽卡下预览大小与 iframe 内部重排恒定,窄卡仍保证完整可见 */
-  const fitWidth = Math.min(available > 0 ? available : BASE_WIDTH, BASE_WIDTH)
-  const visualWidth = fitWidth * ratio
-  const zoomFactor = maxLayoutWidth / fitWidth
-  const layoutWidth = visualWidth * zoomFactor
+  /* 缩放比例恒定(倍率固定,100% 档满基准卡);卡片装不下基准时动态收紧
+     右端点对应的布局宽——100% 档视觉恰好满卡,画面大小不随卡片缩放,
+     代价是窄卡下断点位置随之上移、右端点布局宽低于 1100 */
+  const zoomFactor = maxLayoutWidth / BASE_WIDTH
+  const scale = 1 / zoomFactor
+  const effectiveMaxLayoutWidth =
+    available > 0
+      ? Math.min(maxLayoutWidth, Math.floor(available * zoomFactor))
+      : maxLayoutWidth
+  const layoutWidth = ratio * effectiveMaxLayoutWidth
+  const visualWidth = layoutWidth * scale
   // 视觉高恒为 height,iframe 布局高按同一倍率放大,内部 100svh 随布局高取值
   const layoutHeight = height * zoomFactor
-  const scale = 1 / zoomFactor
 
   return (
     <div
