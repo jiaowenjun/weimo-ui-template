@@ -4,14 +4,12 @@ import { LayoutExamplePage } from '../docs/pages/layout-example-page'
 import { DocsShell } from '../docs/shell/docs-shell'
 import {
   examplePath,
-  iframeFollowExamplePath,
   iframeFollowSolidExamplePath,
   miniExamplePath,
   routerBasename,
   siteTemplatePreviewPath,
 } from '../docs/routes'
 import { MiniSiteTemplateDemo } from '../docs/examples/mini-site-template-demo'
-import { SiteTemplateIframeFollowDemo } from '../docs/examples/site-template-iframe-follow-demo'
 import { SiteTemplateIframeFollowSolidDemo } from '../docs/examples/site-template-iframe-follow-solid-demo'
 import { SiteTemplatePreviewPage } from '../docs/previews/site-template-preview-page'
 
@@ -22,10 +20,6 @@ function App() {
         <Route element={<DocsShell />} path="/">
           <Route index element={<Navigate replace to={examplePath} />} />
           <Route element={<LayoutExamplePage />} path="examples/site-template" />
-          <Route
-            element={<SiteTemplateIframeFollowDemo />}
-            path={iframeFollowExamplePath}
-          />
           <Route
             element={<SiteTemplateIframeFollowSolidDemo />}
             path={iframeFollowSolidExamplePath}
