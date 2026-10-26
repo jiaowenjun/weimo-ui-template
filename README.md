@@ -130,49 +130,7 @@ import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-templat
 </MiniSiteTemplate>
 ```
 
-与 `SiteTemplate` 同源的主题循环与 `document.title` 约定,`pageTitle` / `siteName` 仅驱动 `document.title`;顶栏左侧不显示页面标题,只渲染可选的 `topBarLeading` 前置插槽(与右侧 `topBarActions` 对称,如返回按钮)。`showThemeToggle={false}` 可隐藏右侧主题切换按钮(主题仍按 `defaultTheme` / `theme` 同步到 `html.dark`,默认跟随系统),把该位置让给站点自己的 `topBarActions`(如仓库链接)。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题(取 `LandingTemplate` hero 的字重/字距配方,按单页站尺度缩放),用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`showThemeToggle`、`topBarActions`、`topBarLeading`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
-
-## LandingTemplate 页面模板
-
-`LandingTemplate` 是**整页级**产品落地页模板:返回导航 + 居中 hero(多行标题 / 副标题 / CTA 按钮行 / 宽幅截图)+ 双栏 purpose 区(自适应画廊 + 文案与功能清单)+ 品牌页脚 + 法律行。与 `SiteTemplate` 的站壳不同,它渲染完整页面,适合独立路由(演示:`/examples/landing-template`)。
-
-```tsx
-import { LandingTemplate } from 'weimo-ui-template/components/landing-template'
-import 'weimo-ui-template/styles/landing-template.css'
-
-<LandingTemplate
-  actions={[
-    { href: '/download', iconSrc: '/apple.svg', label: 'Download for Mac', variant: 'primary' },
-    { href: 'https://github.com/x/y', iconSrc: '/github.svg', label: 'View on GitHub', target: '_blank', variant: 'ghost' },
-  ]}
-  backHref="/"
-  backLabel="Portfolio"
-  flashImages={['/shot-1.png', '/shot-2.png', '/shot-3.png', '/shot-4.png']}
-  hero={{ title: 'The Photoshop\nalternative for Mac', subtitle: 'Free, open source', imageSrc: '/hero.png' }}
-  legal="Trademark disclaimer…"
-  productName="MyApp"
-  productIconSrc="/app-icon.png"
-  purpose={{
-    label: 'Purpose',
-    heading: 'All the tools you need for\nprofessional work',
-    paragraphs: ['…'],
-    features: [{ iconSrc: '/ic-layer.png', label: 'Layers' }],
-    gallery: ['/example-1.png', '/example-2.png', '/example-3.png'],
-  }}
-  releaseApiUrl="https://api.github.com/repos/x/y/releases/latest"
-  statusText="Last update: 9/24/26"
-/>
-```
-
-要点:
-
-- **路由无关**:返回链接与按钮都是真实 `<a>`,提供 `onNavigate(href, event)` 供站点路由接管。
-- **主题**:深色样式由任意祖先元素上的 `.dark` class 驱动(与 `SiteTemplate` 同一约定),模板自身不管理主题。
-- **自适应画廊**:桌面端按裁切量在 3 / 4 图间选择(纯函数 `pickGalleryColumns` 从 `components/landing-template-model` 可测),移动端画廊自动变为无限横滚。
-- **主按钮 hover 闪播**:`flashImages` 以 CSS 变量注入,悬停主按钮时逐帧闪现;不传则关闭。
-- **状态行**:`statusText` 静态展示;传 `releaseApiUrl` 后自动抓取 GitHub 最新 release 日期替换。
-- **字体**:默认字体栈含 Inter,但模板不加载网络字体;需要精确还原时由宿主自行引入(如 Google Fonts)。
-- **全出血**:整页路由需要退出 `base.css` 为文档页准备的 `#root` 槽边,例如 `#root:has(.landing-template) { padding-inline: 0; }`。
+与 `SiteTemplate` 同源的主题循环与 `document.title` 约定,`pageTitle` / `siteName` 仅驱动 `document.title`;顶栏左侧不显示页面标题,只渲染可选的 `topBarLeading` 前置插槽(与右侧 `topBarActions` 对称,如返回按钮)。`showThemeToggle={false}` 可隐藏右侧主题切换按钮(主题仍按 `defaultTheme` / `theme` 同步到 `html.dark`,默认跟随系统),把该位置让给站点自己的 `topBarActions`(如仓库链接)。可选 `headline` / `subheadline` 在内容区顶部渲染居中主标题与副标题,用于直接传达产品核心价值。支持 `siteName`、`pageTitle`、`headline` / `subheadline`、`defaultTheme` / `theme` / `onThemeChange`、`showThemeToggle`、`topBarActions`、`topBarLeading`、`manageDocumentTitle` 与 `contentClassName` / `contentProps` / `mainClassName` 扩展点,不含任何导航 Props。
 
 ## 页面内组件示例
 

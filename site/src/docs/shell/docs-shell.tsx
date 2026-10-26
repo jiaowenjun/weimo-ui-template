@@ -5,7 +5,7 @@ import {
   type SiteNavigationGroup,
   type SiteNavigationItem,
 } from 'weimo-ui-template/components/site-template'
-import { exampleHref, examplePath, landingExampleHref, landingExamplePath } from '../routes'
+import { exampleHref, examplePath } from '../routes'
 
 const navigationGroups: SiteNavigationGroup[] = [
   {
@@ -17,11 +17,6 @@ const navigationGroups: SiteNavigationGroup[] = [
         href: exampleHref(),
         label: 'SiteTemplate',
       },
-      {
-        id: 'landing-template',
-        href: landingExampleHref(),
-        label: 'LandingTemplate',
-      },
     ],
   },
 ]
@@ -32,9 +27,6 @@ export function DocsShell() {
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
-    }
-    if (item.id === 'landing-template') {
-      navigate(landingExamplePath)
     }
   }
 

@@ -180,25 +180,4 @@ assert.equal(
   'the site must not declare its own Node engine range',
 )
 
-const landingDemo = await readFile(
-  new URL('../site/src/docs/examples/landing-template-demo.tsx', import.meta.url),
-  'utf8',
-)
-
-assert.match(
-  landingDemo,
-  /from 'weimo-ui-template\/components\/landing-template'/,
-  'the landing demo must consume the public LandingTemplate API',
-)
-assert.match(
-  landingDemo,
-  /<LandingTemplate\b/,
-  'the landing demo must render the LandingTemplate directly',
-)
-assert.match(
-  shellSource,
-  /id: 'landing-template'/,
-  'the docs shell must link to the landing demo',
-)
-
 console.log('site contract passed')

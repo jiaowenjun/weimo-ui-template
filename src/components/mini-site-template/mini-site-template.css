@@ -40,7 +40,7 @@
     margin-inline: auto;
   }
 
-  /* 居中标题区,取 LandingTemplate hero 的字重/字距配方,按单页站尺度缩放;
+  /* 居中标题区,按单页站尺度缩放;
    * 零 padding,上 margin 为 0(顶距由 __hero 承担),下 36 表达与 hero 内后续内容的间距 */
   .weimo-mini-site-template__hero-head {
     padding-block: 0;

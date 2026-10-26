@@ -99,7 +99,7 @@ function useTheme({
  * defaultTheme/theme 同步到 html.dark(默认跟随系统),站点可把该位置
  * 让给自己的 topBarActions。
  * headline/subheadline 提供时,标题区与内容一起包进 hero wrapper,
- * 标题区渲染居中主标题与副标题(LandingTemplate hero 的缩小版)。
+ * 标题区渲染居中主标题与副标题。
  */
 export function MiniSiteTemplate({
   children,
