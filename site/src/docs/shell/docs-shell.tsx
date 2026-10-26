@@ -8,8 +8,6 @@ import {
 import {
   exampleHref,
   examplePath,
-  iframeFollowSolidExampleHref,
-  iframeFollowSolidExamplePath,
   miniExampleHref,
   miniExamplePath,
 } from '../routes'
@@ -31,28 +29,11 @@ const navigationGroups: SiteNavigationGroup[] = [
       },
     ],
   },
-  {
-    id: 'preview-compare',
-    title: '预览方案对比',
-    items: [
-      {
-        id: 'site-template-iframe-follow-solid',
-        href: iframeFollowSolidExampleHref(),
-        label: 'SiteTemplate · iframe 跟随(实底)',
-      },
-    ],
-  },
 ]
 
 export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
-  const iframeFollowSolidMatch = useMatch(iframeFollowSolidExamplePath)
-  const activeItemId = layoutMatch
-    ? 'site-template'
-    : iframeFollowSolidMatch
-      ? 'site-template-iframe-follow-solid'
-      : undefined
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
@@ -60,14 +41,11 @@ export function DocsShell() {
     if (item.id === 'mini-site-template') {
       navigate(miniExamplePath)
     }
-    if (item.id === 'site-template-iframe-follow-solid') {
-      navigate(iframeFollowSolidExamplePath)
-    }
   }
 
   return (
     <SiteTemplate
-      activeItemId={activeItemId}
+      activeItemId={layoutMatch ? 'site-template' : undefined}
       navigationGroups={navigationGroups}
       onNavigate={openExample}
       pageTitle="SiteTemplate"

@@ -1,5 +1,5 @@
-import { SiteTemplatePreview } from '../examples/site-template-preview'
+import { SiteTemplateDemo } from '../examples/site-template-demo'
 
 export function LayoutExamplePage() {
-  return <SiteTemplatePreview />
+  return <SiteTemplateDemo />
 }
