@@ -34,10 +34,10 @@ export function MiniSiteTemplatePreviewPage() {
   return (
     <MiniSiteTemplate
       defaultTheme={defaultTheme}
-      headline="无侧边栏的单页站壳"
+      headline="单页站壳"
       pageTitle="MiniSiteTemplate"
       siteName="weimo-ui-template"
-      subheadline="顶栏插槽、三态主题循环与 document.title 开箱即用;内容区不限布局宽度,顶栏同步对齐。"
+      subheadline="顶栏插槽与三态主题开箱即用。"
       topBarActions={
         <FrostedIconButton
           aria-label="GitHub 仓库"
@@ -47,17 +47,11 @@ export function MiniSiteTemplatePreviewPage() {
         </FrostedIconButton>
       }
     >
-      <ComponentPreviewCard label="顶栏插槽">
+      <ComponentPreviewCard label="顶栏与主题">
         <p className="mini-site-template-preview-page__description">
-          右侧 topBarActions 放仓库链接,主题切换按钮默认居最右;
-          showThemeToggle={'{'}false{'}'} 可隐藏该按钮,把位置让给站点自己的操作。
-        </p>
-      </ComponentPreviewCard>
-
-      <ComponentPreviewCard label="三态主题循环">
-        <p className="mini-site-template-preview-page__description">
-          右上角按钮按 light → dark → system 循环,只作用于本文档,
-          外层文档站的主题不受影响。
+          右上角主题按钮按 light → dark → system 循环,只作用于本文档;
+          topBarActions 插槽放仓库链接,showThemeToggle={'{'}false{'}'}
+          可隐藏主题按钮、把位置让给站点操作。
         </p>
       </ComponentPreviewCard>
 
