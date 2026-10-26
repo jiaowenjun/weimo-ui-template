@@ -1,0 +1,36 @@
+/* 站点底部 DEBUG 开关本体:文档流排在站壳 main 末尾、内容之后,
+ * 不悬浮视口底、不遮挡内容;与上方内容按卡间同节奏留距 */
+.debug-outline-toggle {
+  display: flex;
+  justify-content: center;
+  margin-block-start: calc(var(--space-gutter) * 1.6);
+}
+
+/* DEBUG 开关开启后勾勒站壳顶层部件与 hero 内子容器(标题区/演示卡);
+ * 叠加临时 2px margin 让轮廓外留出空隙,关闭时随类移除自动还原 */
+.debug-outline .top-bar,
+.debug-outline .weimo-mini-site-template,
+.debug-outline .weimo-mini-site-template__content,
+.debug-outline .weimo-mini-site-template__hero,
+.debug-outline .weimo-mini-site-template__content > *,
+.debug-outline .weimo-mini-site-template__hero > *,
+/* 演示卡在双列 grid 容器内,比 editor 站多一层,须单独点名 */
+.debug-outline .layout-example-page__cards > * {
+  border-radius: var(--radius);
+  outline: 1px solid var(--color-border);
+  outline-offset: -1px;
+  margin: 2px;
+}
+
+/* hero 满宽版原 margin 为「上 64、inline 0、下 0」,块轴 >0 须整体恢复,
+ * margin: 2px 简写压掉的功能值连上 margin 一起写回 */
+.debug-outline .weimo-mini-site-template__hero {
+  margin: 64px 2px 2px;
+}
+
+/* 临时 2px 外距只叠加在原 margin 为 0 的部件上;
+ * 自带功能 margin 的部件恢复原值——其 margin 已提供轮廓间隙
+ * (hero-head 原上 margin 为 0,故上向仍享 2px、下向 36 恢复) */
+.debug-outline .weimo-mini-site-template__hero-head {
+  margin-block: 2px 36px;
+}

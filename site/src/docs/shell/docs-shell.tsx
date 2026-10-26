@@ -4,6 +4,8 @@ import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
 import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-template'
 
 import { GitHubIcon } from '../github-icon'
+import { DebugOutlineToggle } from './debug-outline-toggle'
+import './debug-outline-toggle.css'
 
 const repoUrl = 'https://github.com/jiaowenjun/weimo-ui-template'
 
@@ -23,6 +25,7 @@ export function DocsShell() {
       }
     >
       <Outlet />
+      <DebugOutlineToggle />
     </MiniSiteTemplate>
   )
 }
