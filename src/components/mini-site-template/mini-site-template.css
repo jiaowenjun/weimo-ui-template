@@ -23,17 +23,16 @@
   }
 
   /* hero wrapper:包住标题区与内容,自身零 padding,纵向衔接统一由 gap 驱动;
-   * 限宽 content-max-width 居中,全宽壳内收拢标题与卡的阅读宽度;
-   * 顶距 64px 由 hero 自持(页面进入 hero 区的留白),块轴长写不碰 inline 居中 */
+   * 不设最大宽度,充分占用视口(仅剩壳的页边留白)——标题区仍居中、
+   * 副标题按 44em 文本度量收拢,内容卡可用宽度随视口展开;
+   * 顶距 64px 由 hero 自持(页面进入 hero 区的留白) */
   .weimo-mini-site-template__hero {
     display: flex;
     width: 100%;
     min-width: 0;
-    max-width: var(--size-content-max-width);
     flex-direction: column;
     gap: var(--space-gutter);
     margin-block-start: 64px;
-    margin-inline: auto;
   }
 
   /* 居中标题区,按单页站尺度缩放;
