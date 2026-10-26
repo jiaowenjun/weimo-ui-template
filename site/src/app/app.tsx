@@ -5,12 +5,14 @@ import { DocsShell } from '../docs/shell/docs-shell'
 import {
   examplePath,
   iframeExamplePath,
+  iframeFitExamplePath,
   miniExamplePath,
   routerBasename,
   siteTemplatePreviewPath,
 } from '../docs/routes'
 import { MiniSiteTemplateDemo } from '../docs/examples/mini-site-template-demo'
 import { SiteTemplateIframeDemo } from '../docs/examples/site-template-iframe-demo'
+import { SiteTemplateIframeFitDemo } from '../docs/examples/site-template-iframe-fit-demo'
 import { SiteTemplatePreviewPage } from '../docs/previews/site-template-preview-page'
 
 function App() {
@@ -23,6 +25,10 @@ function App() {
           <Route
             element={<SiteTemplateIframeDemo />}
             path={iframeExamplePath}
+          />
+          <Route
+            element={<SiteTemplateIframeFitDemo />}
+            path={iframeFitExamplePath}
           />
           <Route element={<Navigate replace to={examplePath} />} path="*" />
         </Route>

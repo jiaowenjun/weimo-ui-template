@@ -10,6 +10,8 @@ import {
   examplePath,
   iframeExampleHref,
   iframeExamplePath,
+  iframeFitExampleHref,
+  iframeFitExamplePath,
   miniExampleHref,
   miniExamplePath,
 } from '../routes'
@@ -40,6 +42,11 @@ const navigationGroups: SiteNavigationGroup[] = [
         href: iframeExampleHref(),
         label: 'SiteTemplate · iframe',
       },
+      {
+        id: 'site-template-iframe-fit',
+        href: iframeFitExampleHref(),
+        label: 'SiteTemplate · iframe 缩放',
+      },
     ],
   },
 ]
@@ -48,11 +55,14 @@ export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
   const iframeMatch = useMatch(iframeExamplePath)
+  const iframeFitMatch = useMatch(iframeFitExamplePath)
   const activeItemId = layoutMatch
     ? 'site-template'
     : iframeMatch
       ? 'site-template-iframe'
-      : undefined
+      : iframeFitMatch
+        ? 'site-template-iframe-fit'
+        : undefined
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
@@ -62,6 +72,9 @@ export function DocsShell() {
     }
     if (item.id === 'site-template-iframe') {
       navigate(iframeExamplePath)
+    }
+    if (item.id === 'site-template-iframe-fit') {
+      navigate(iframeFitExamplePath)
     }
   }
 
