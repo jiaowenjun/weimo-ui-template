@@ -8,10 +8,6 @@ import {
 import {
   exampleHref,
   examplePath,
-  iframeExampleHref,
-  iframeExamplePath,
-  iframeFitExampleHref,
-  iframeFitExamplePath,
   iframeFollowExampleHref,
   iframeFollowExamplePath,
   miniExampleHref,
@@ -40,16 +36,6 @@ const navigationGroups: SiteNavigationGroup[] = [
     title: '预览方案对比',
     items: [
       {
-        id: 'site-template-iframe',
-        href: iframeExampleHref(),
-        label: 'SiteTemplate · iframe',
-      },
-      {
-        id: 'site-template-iframe-fit',
-        href: iframeFitExampleHref(),
-        label: 'SiteTemplate · iframe 缩放',
-      },
-      {
         id: 'site-template-iframe-follow',
         href: iframeFollowExampleHref(),
         label: 'SiteTemplate · iframe 跟随',
@@ -61,30 +47,18 @@ const navigationGroups: SiteNavigationGroup[] = [
 export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
-  const iframeMatch = useMatch(iframeExamplePath)
-  const iframeFitMatch = useMatch(iframeFitExamplePath)
   const iframeFollowMatch = useMatch(iframeFollowExamplePath)
   const activeItemId = layoutMatch
     ? 'site-template'
-    : iframeMatch
-      ? 'site-template-iframe'
-      : iframeFitMatch
-        ? 'site-template-iframe-fit'
-        : iframeFollowMatch
-          ? 'site-template-iframe-follow'
-          : undefined
+    : iframeFollowMatch
+      ? 'site-template-iframe-follow'
+      : undefined
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
     }
     if (item.id === 'mini-site-template') {
       navigate(miniExamplePath)
-    }
-    if (item.id === 'site-template-iframe') {
-      navigate(iframeExamplePath)
-    }
-    if (item.id === 'site-template-iframe-fit') {
-      navigate(iframeFitExamplePath)
     }
     if (item.id === 'site-template-iframe-follow') {
       navigate(iframeFollowExamplePath)
