@@ -1,0 +1,12 @@
+/* MiniSiteTemplate 是全宽壳,退出 base.css 为文档页准备的 #root 槽边 */
+#root:has(.weimo-mini-site-template) {
+  padding-inline: 0;
+}
+
+.mini-site-template-preview-page__description {
+  max-width: 44em;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: 1.7;
+}

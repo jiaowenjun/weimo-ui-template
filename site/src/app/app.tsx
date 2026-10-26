@@ -5,10 +5,12 @@ import { DocsShell } from '../docs/shell/docs-shell'
 import {
   examplePath,
   miniExamplePath,
+  miniSiteTemplatePreviewPath,
   routerBasename,
   siteTemplatePreviewPath,
 } from '../docs/routes'
 import { MiniSiteTemplateDemo } from '../docs/examples/mini-site-template-demo'
+import { MiniSiteTemplatePreviewPage } from '../docs/previews/mini-site-template-preview-page'
 import { SiteTemplatePreviewPage } from '../docs/previews/site-template-preview-page'
 
 function App() {
@@ -18,14 +20,17 @@ function App() {
         <Route element={<DocsShell />} path="/">
           <Route index element={<Navigate replace to={examplePath} />} />
           <Route element={<LayoutExamplePage />} path="examples/site-template" />
+          <Route element={<MiniSiteTemplateDemo />} path={miniExamplePath} />
           <Route element={<Navigate replace to={examplePath} />} path="*" />
         </Route>
-        {/* MiniSiteTemplate 自带顶栏,是整页站壳,演示页与文档壳平级独立渲染 */}
-        <Route element={<MiniSiteTemplateDemo />} path={miniExamplePath} />
-        {/* iframe 预览源页面:独立 document,不套文档壳,供 PreviewFrame 加载 */}
+        {/* iframe 预览源页面:独立 document,不套文档壳,供缩放预览壳加载 */}
         <Route
           element={<SiteTemplatePreviewPage />}
           path={siteTemplatePreviewPath}
+        />
+        <Route
+          element={<MiniSiteTemplatePreviewPage />}
+          path={miniSiteTemplatePreviewPath}
         />
       </Routes>
     </BrowserRouter>

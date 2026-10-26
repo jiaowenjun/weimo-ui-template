@@ -34,6 +34,7 @@ const navigationGroups: SiteNavigationGroup[] = [
 export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
+  const miniMatch = useMatch(miniExamplePath)
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
@@ -45,7 +46,13 @@ export function DocsShell() {
 
   return (
     <SiteTemplate
-      activeItemId={layoutMatch ? 'site-template' : undefined}
+      activeItemId={
+        layoutMatch
+          ? 'site-template'
+          : miniMatch
+            ? 'mini-site-template'
+            : undefined
+      }
       navigationGroups={navigationGroups}
       onNavigate={openExample}
       pageTitle="SiteTemplate"

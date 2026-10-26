@@ -2,12 +2,10 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { ComponentPreviewCard } from 'weimo-ui-core/components/component-preview-card'
-import {
-  SiteTemplate,
-  type SiteNavigationGroup,
-  type ThemeMode,
-} from 'weimo-ui-template/components/site-template'
+import { SiteTemplate } from 'weimo-ui-template/components/site-template'
+import type { SiteNavigationGroup } from 'weimo-ui-template/components/site-template'
 
+import { parseThemeMode } from './preview-theme'
 import './site-template-preview-page.css'
 
 const navigationGroups: SiteNavigationGroup[] = [
@@ -21,12 +19,6 @@ const navigationGroups: SiteNavigationGroup[] = [
     ],
   },
 ]
-
-const themeModes: readonly ThemeMode[] = ['light', 'dark', 'system']
-
-function parseThemeMode(value: string | null): ThemeMode | undefined {
-  return themeModes.find((mode) => mode === value)
-}
 
 /** iframe 预览源页面:不加任何包装地渲染生产 SiteTemplate,
     由外层演示卡片的 iframe 提供独立 viewport 与文档环境。 */
