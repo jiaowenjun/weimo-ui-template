@@ -1,0 +1,12 @@
+/* 演示卡双列,窄于 700px 断点回落单列(与项目断点体系一致) */
+.layout-example-page__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-gutter);
+}
+
+@media (max-width: 699px) {
+  .layout-example-page__cards {
+    grid-template-columns: 1fr;
+  }
+}

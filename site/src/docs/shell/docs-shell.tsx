@@ -1,44 +1,28 @@
-import { Outlet, useMatch, useNavigate } from 'react-router'
+import { Outlet } from 'react-router'
 
-import {
-  SiteTemplate,
-  type SiteNavigationGroup,
-  type SiteNavigationItem,
-} from 'weimo-ui-template/components/site-template'
-import { exampleHref, examplePath } from '../routes'
+import { FrostedIconButton } from 'weimo-ui-core/components/frosted-icon-button'
+import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-template'
 
-const navigationGroups: SiteNavigationGroup[] = [
-  {
-    id: 'templates',
-    title: '页面模板',
-    items: [
-      {
-        id: 'site-template',
-        href: exampleHref(),
-        label: 'SiteTemplate',
-      },
-    ],
-  },
-]
+import { GitHubIcon } from '../github-icon'
+
+const repoUrl = 'https://github.com/jiaowenjun/weimo-ui-template'
 
 export function DocsShell() {
-  const navigate = useNavigate()
-  const layoutMatch = useMatch(examplePath)
-  const openExample = (item: SiteNavigationItem) => {
-    if (item.id === 'site-template') {
-      navigate(examplePath)
-    }
-  }
-
   return (
-    <SiteTemplate
-      activeItemId={layoutMatch ? 'site-template' : undefined}
-      navigationGroups={navigationGroups}
-      onNavigate={openExample}
-      pageTitle="SiteTemplate"
+    <MiniSiteTemplate
+      headline="weimo-ui-template"
       siteName="weimo-ui-template"
+      subheadline="站壳与内容原语——你正在看的这个站点,就是 MiniSiteTemplate 的实例。"
+      topBarActions={
+        <FrostedIconButton
+          aria-label="GitHub 仓库"
+          onClick={() => window.open(repoUrl, '_blank', 'noopener,noreferrer')}
+        >
+          <GitHubIcon />
+        </FrostedIconButton>
+      }
     >
       <Outlet />
-    </SiteTemplate>
+    </MiniSiteTemplate>
   )
 }
