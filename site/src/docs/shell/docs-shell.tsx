@@ -10,9 +10,9 @@ const repoUrl = 'https://github.com/jiaowenjun/weimo-ui-template'
 export function DocsShell() {
   return (
     <MiniSiteTemplate
-      headline="weimo-ui-template"
+      headline="网站模板，开箱即用"
       siteName="weimo-ui-template"
-      subheadline="站壳与内容原语——你正在看的这个站点,就是 MiniSiteTemplate 的实例。"
+      subheadline="亮暗随行，宽窄自适应，克制极简"
       topBarActions={
         <FrostedIconButton
           aria-label="GitHub 仓库"
