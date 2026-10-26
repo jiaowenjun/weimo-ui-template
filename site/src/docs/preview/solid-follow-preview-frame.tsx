@@ -19,8 +19,9 @@ type SolidFollowPreviewFrameProps = {
     缩放比例按 BASE_WIDTH 固定:卡片比基准宽时预览大小恒定(不随卡片
     放大,画面居中留白),比基准窄时单向降级为 fit 保证完整可见。 */
 
-/* 固定缩放基准:100% 档视觉宽的上限,取 1280 视口双列卡实况 */
-const BASE_WIDTH = 590
+/* 固定缩放基准:100% 档视觉宽的上限,与演示卡内容最大宽度 token 对应
+   (700px − 卡片 padding/边框 ≈ 672);卡片达上限时预览正好满卡 */
+const BASE_WIDTH = 672
 export function SolidFollowPreviewFrame({
   height = 430,
   maxLayoutWidth,
