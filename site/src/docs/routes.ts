@@ -1,5 +1,7 @@
 export const examplePath = '/examples/site-template'
 export const miniExamplePath = '/examples/mini-site-template'
+export const iframeExamplePath = '/examples/site-template-iframe'
+export const siteTemplatePreviewPath = '/previews/site-template'
 
 export const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '')
 
@@ -17,4 +19,16 @@ export function miniExampleHref() {
   }
 
   return `${routerBasename}${miniExamplePath}`
+}
+
+function withBasename(path: string) {
+  return routerBasename ? `${routerBasename}${path}` : path
+}
+
+export function iframeExampleHref() {
+  return withBasename(iframeExamplePath)
+}
+
+export function siteTemplatePreviewHref() {
+  return withBasename(siteTemplatePreviewPath)
 }

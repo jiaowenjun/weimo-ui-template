@@ -1,0 +1,34 @@
+.preview-frame {
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--color-bg-page);
+}
+
+/* 预览宽度超出卡片时横向滚动;safe center 保证溢出时左缘仍可达 */
+.preview-frame__scroll {
+  display: flex;
+  height: 100%;
+  justify-content: safe center;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.preview-frame__iframe {
+  display: block;
+  flex: none;
+  height: 100%;
+  border: 0;
+  background: var(--color-bg-page);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+
+.preview-frame__iframe--loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame__iframe {
+    transition: none;
+  }
+}

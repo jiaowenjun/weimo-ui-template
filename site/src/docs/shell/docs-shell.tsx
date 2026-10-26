@@ -5,7 +5,14 @@ import {
   type SiteNavigationGroup,
   type SiteNavigationItem,
 } from 'weimo-ui-template/components/site-template'
-import { exampleHref, examplePath, miniExampleHref, miniExamplePath } from '../routes'
+import {
+  exampleHref,
+  examplePath,
+  iframeExampleHref,
+  iframeExamplePath,
+  miniExampleHref,
+  miniExamplePath,
+} from '../routes'
 
 const navigationGroups: SiteNavigationGroup[] = [
   {
@@ -24,11 +31,28 @@ const navigationGroups: SiteNavigationGroup[] = [
       },
     ],
   },
+  {
+    id: 'preview-compare',
+    title: '预览方案对比',
+    items: [
+      {
+        id: 'site-template-iframe',
+        href: iframeExampleHref(),
+        label: 'SiteTemplate · iframe',
+      },
+    ],
+  },
 ]
 
 export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
+  const iframeMatch = useMatch(iframeExamplePath)
+  const activeItemId = layoutMatch
+    ? 'site-template'
+    : iframeMatch
+      ? 'site-template-iframe'
+      : undefined
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
@@ -36,11 +60,14 @@ export function DocsShell() {
     if (item.id === 'mini-site-template') {
       navigate(miniExamplePath)
     }
+    if (item.id === 'site-template-iframe') {
+      navigate(iframeExamplePath)
+    }
   }
 
   return (
     <SiteTemplate
-      activeItemId={layoutMatch ? 'site-template' : undefined}
+      activeItemId={activeItemId}
       navigationGroups={navigationGroups}
       onNavigate={openExample}
       pageTitle="SiteTemplate"
