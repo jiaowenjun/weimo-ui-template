@@ -47,20 +47,22 @@ export function MiniSiteTemplatePreviewPage() {
         </FrostedIconButton>
       }
     >
-      <ComponentPreviewCard label="顶栏与主题">
-        <p className="mini-site-template-preview-page__description">
-          右上角主题按钮按 light → dark → system 循环,只作用于本文档;
-          topBarActions 插槽放仓库链接,showThemeToggle={'{'}false{'}'}
-          可隐藏主题按钮、把位置让给站点操作。
-        </p>
-      </ComponentPreviewCard>
+      <div className="mini-site-template-preview-page__cards">
+        <ComponentPreviewCard label="顶栏与主题">
+          <p className="mini-site-template-preview-page__description">
+            右上角主题按钮按 light → dark → system 循环,只作用于本文档;
+            topBarActions 插槽放仓库链接,showThemeToggle={'{'}false{'}'}
+            可隐藏主题按钮、把位置让给站点操作。
+          </p>
+        </ComponentPreviewCard>
 
-      <ComponentPreviewCard label="阅读宽度内容区">
-        <p className="mini-site-template-preview-page__description">
-          headline 提供时,标题区与内容一起收进限宽的 hero
-          阅读宽度;不提供时内容区全宽展开,只保留页边留白。
-        </p>
-      </ComponentPreviewCard>
+        <ComponentPreviewCard label="阅读宽度内容区">
+          <p className="mini-site-template-preview-page__description">
+            headline 提供时,标题区与内容一起收进限宽的 hero
+            阅读宽度;不提供时内容区全宽展开,只保留页边留白。
+          </p>
+        </ComponentPreviewCard>
+      </div>
     </MiniSiteTemplate>
   )
 }
