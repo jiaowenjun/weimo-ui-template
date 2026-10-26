@@ -1,5 +1,5 @@
 @layer components {
-  /* 全宽单页壳:内容区不限宽,顶栏 frame 同步解除布局上限保持边缘对齐 */
+  /* 全宽单页壳:内容区不限宽,顶栏经 TopBar variant="full-width" 解除限宽保持边缘对齐 */
   .weimo-mini-site-template {
     box-sizing: border-box;
     width: 100%;
@@ -13,13 +13,6 @@
     flex-direction: column;
     gap: var(--space-gutter);
     color: var(--color-text-primary);
-  }
-
-  /* 顶栏与壳 main 平级且在其前,CSS 无法后向选择,经 body:has 限定作用域:
-   * 裸 .top-bar__frame 会掀翻 core 默认限宽,单 bundle 下殃及所有限宽壳
-   * (如 SiteTemplate)的顶栏与内容区对齐 */
-  body:has(.weimo-mini-site-template) .top-bar__frame {
-    max-width: none;
   }
 
   .weimo-mini-site-template__top-bar-slot {

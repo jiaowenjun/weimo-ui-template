@@ -151,7 +151,7 @@ export function MiniSiteTemplate({
 
   return (
     <>
-      <TopBar leftSlot={leftSlot} rightSlot={rightSlot} />
+      <TopBar leftSlot={leftSlot} rightSlot={rightSlot} variant="full-width" />
 
       <main className={cn('weimo-mini-site-template', mainClassName)}>
         <div

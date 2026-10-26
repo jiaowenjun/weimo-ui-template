@@ -16,8 +16,16 @@ vi.mock('weimo-ui-core/components/frosted-label', () => ({
 }))
 
 vi.mock('weimo-ui-core/components/top-bar', () => ({
-  TopBar: ({ leftSlot, rightSlot }: { leftSlot?: React.ReactNode; rightSlot?: React.ReactNode }) => (
-    <header>
+  TopBar: ({
+    leftSlot,
+    rightSlot,
+    variant,
+  }: {
+    leftSlot?: React.ReactNode
+    rightSlot?: React.ReactNode
+    variant?: string
+  }) => (
+    <header data-variant={variant}>
       {leftSlot}
       {rightSlot}
     </header>
@@ -37,6 +45,15 @@ beforeEach(() => {
 })
 
 describe('MiniSiteTemplate', () => {
+  it('renders the top bar in the full-width variant', () => {
+    render(<MiniSiteTemplate siteName="weimo-ui-editor" />)
+
+    expect(document.querySelector('header')).toHaveAttribute(
+      'data-variant',
+      'full-width',
+    )
+  })
+
   it('renders content without a top-bar title label', () => {
     render(
       <MiniSiteTemplate pageTitle="WDF读写卡片" siteName="weimo-ui-editor">
