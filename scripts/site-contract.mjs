@@ -180,4 +180,25 @@ assert.equal(
   'the site must not declare its own Node engine range',
 )
 
+const miniDemo = await readFile(
+  new URL('../site/src/docs/examples/mini-site-template-demo.tsx', import.meta.url),
+  'utf8',
+)
+
+assert.match(
+  miniDemo,
+  /from 'weimo-ui-template\/components\/mini-site-template'/,
+  'the mini demo must consume the public MiniSiteTemplate API',
+)
+assert.match(
+  miniDemo,
+  /<MiniSiteTemplate\b/,
+  'the mini demo must render the MiniSiteTemplate directly',
+)
+assert.match(
+  shellSource,
+  /id: 'mini-site-template'/,
+  'the docs shell must link to the mini demo',
+)
+
 console.log('site contract passed')

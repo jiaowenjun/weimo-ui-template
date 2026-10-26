@@ -120,7 +120,7 @@ export function DocsShell() {
 
 ## MiniSiteTemplate 单页站壳
 
-`MiniSiteTemplate` 是 `SiteTemplate` 的无侧边栏形态:顶栏 + 全宽内容(不限布局最大宽度,顶栏同步对齐),没有导航抽屉与侧栏占位。适合只有一个页面的站点(单组件演示站、单页文档)。
+`MiniSiteTemplate` 是 `SiteTemplate` 的无侧边栏形态:顶栏 + 全宽内容(不限布局最大宽度,顶栏同步对齐),没有导航抽屉与侧栏占位。适合只有一个页面的站点(单组件演示站、单页文档)。演示:`/examples/mini-site-template`。
 
 ```tsx
 import { MiniSiteTemplate } from 'weimo-ui-template/components/mini-site-template'
