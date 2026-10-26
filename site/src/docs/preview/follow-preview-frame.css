@@ -1,0 +1,40 @@
+.follow-preview-frame {
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--color-bg-page);
+}
+
+/* 视觉视口:宽度 = 百分比 × 容器可用宽,全程跟随滑块,无横向滚动 */
+.follow-preview-frame__stage {
+  position: relative;
+  height: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  transition: width 180ms ease;
+}
+
+.follow-preview-frame__iframe {
+  display: block;
+  border: 0;
+  transform-origin: top left;
+  background: var(--color-bg-page);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+
+.follow-preview-frame__iframe--loaded {
+  opacity: 1;
+}
+
+/* 拖动期间禁用过渡保证逐帧跟手;监听挂在 window 上,
+   指针拖出滑块范围后松手也能恢复过渡(重置的归位动画依赖它) */
+.follow-preview-frame--resizing .follow-preview-frame__stage {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .follow-preview-frame__stage,
+  .follow-preview-frame__iframe {
+    transition: none;
+  }
+}

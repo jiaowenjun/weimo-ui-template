@@ -6,6 +6,7 @@ import {
   examplePath,
   iframeExamplePath,
   iframeFitExamplePath,
+  iframeFollowExamplePath,
   miniExamplePath,
   routerBasename,
   siteTemplatePreviewPath,
@@ -13,6 +14,7 @@ import {
 import { MiniSiteTemplateDemo } from '../docs/examples/mini-site-template-demo'
 import { SiteTemplateIframeDemo } from '../docs/examples/site-template-iframe-demo'
 import { SiteTemplateIframeFitDemo } from '../docs/examples/site-template-iframe-fit-demo'
+import { SiteTemplateIframeFollowDemo } from '../docs/examples/site-template-iframe-follow-demo'
 import { SiteTemplatePreviewPage } from '../docs/previews/site-template-preview-page'
 
 function App() {
@@ -29,6 +31,10 @@ function App() {
           <Route
             element={<SiteTemplateIframeFitDemo />}
             path={iframeFitExamplePath}
+          />
+          <Route
+            element={<SiteTemplateIframeFollowDemo />}
+            path={iframeFollowExamplePath}
           />
           <Route element={<Navigate replace to={examplePath} />} path="*" />
         </Route>
