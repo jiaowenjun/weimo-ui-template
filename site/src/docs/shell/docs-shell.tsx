@@ -15,6 +15,7 @@ export function DocsShell() {
   return (
     <MiniSiteTemplate
       headline="网站模板，开箱即用"
+      showThemeToggle={false}
       siteName="weimo-ui-template"
       subheadline="亮暗随行，宽窄自适应，克制极简"
       topBarActions={
