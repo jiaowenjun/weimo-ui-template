@@ -50,7 +50,7 @@
 
   .weimo-mini-site-template__headline {
     margin: 0;
-    font-size: clamp(24px, 5vw, 64px);
+    font-size: clamp(32px, 5vw, 64px);
     font-weight: 700;
     color: var(--color-text-primary);
   }

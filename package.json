@@ -1,6 +1,6 @@
 {
   "name": "weimo-ui-template",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Reusable site shell and content primitives for Weimo UI documentation sites.",
   "type": "module",
   "license": "MIT",
