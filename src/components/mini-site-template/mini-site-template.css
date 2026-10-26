@@ -50,18 +50,15 @@
 
   .weimo-mini-site-template__headline {
     margin: 0;
-    font-size: clamp(24px, 5vw, 34px);
-    line-height: 1.1;
+    font-size: clamp(24px, 5vw, 64px);
     font-weight: 700;
-    letter-spacing: -0.025em;
     color: var(--color-text-primary);
   }
 
   .weimo-mini-site-template__subheadline {
     max-width: 44em;
     margin: 12px auto 0;
-    font-size: var(--font-size-md);
-    line-height: 1.4;
+    font-size: var(--font-size-xl);
     font-weight: 400;
     color: var(--color-text-secondary);
   }
