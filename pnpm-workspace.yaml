@@ -4,4 +4,4 @@ packages:
 minimumReleaseAgeExclude:
   - '@base-ui/react@1.9.0'
   - '@base-ui/utils@0.5.0'
-  - weimo-ui-core@0.1.0
+  - weimo-ui-core@0.1.0 || 0.2.0
