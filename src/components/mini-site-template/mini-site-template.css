@@ -15,7 +15,10 @@
     color: var(--color-text-primary);
   }
 
-  .top-bar__frame {
+  /* 顶栏与壳 main 平级且在其前,CSS 无法后向选择,经 body:has 限定作用域:
+   * 裸 .top-bar__frame 会掀翻 core 默认限宽,单 bundle 下殃及所有限宽壳
+   * (如 SiteTemplate)的顶栏与内容区对齐 */
+  body:has(.weimo-mini-site-template) .top-bar__frame {
     max-width: none;
   }
 
