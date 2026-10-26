@@ -23,8 +23,12 @@
 }
 
 /* hero 满宽版原 margin 为「上 64、inline 0、下 0」,块轴 >0 须整体恢复,
- * margin: 2px 简写压掉的功能值连上 margin 一起写回 */
+ * margin: 2px 简写压掉的功能值连上 margin 一起写回;
+ * hero 的显式 width:100% 在 flex 列交叉轴不吸收水平 margin(右缘溢出
+ * 父容器 2px),开态临时改 width:auto 交由 stretch 接管,水平 margin
+ * 在可用宽内扣减 */
 .debug-outline .weimo-mini-site-template__hero {
+  width: auto;
   margin: 64px 2px 2px;
 }
 
