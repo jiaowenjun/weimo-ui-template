@@ -5,12 +5,7 @@ import {
   type SiteNavigationGroup,
   type SiteNavigationItem,
 } from 'weimo-ui-template/components/site-template'
-import {
-  exampleHref,
-  examplePath,
-  miniExampleHref,
-  miniExamplePath,
-} from '../routes'
+import { exampleHref, examplePath } from '../routes'
 
 const navigationGroups: SiteNavigationGroup[] = [
   {
@@ -22,11 +17,6 @@ const navigationGroups: SiteNavigationGroup[] = [
         href: exampleHref(),
         label: 'SiteTemplate',
       },
-      {
-        id: 'mini-site-template',
-        href: miniExampleHref(),
-        label: 'MiniSiteTemplate',
-      },
     ],
   },
 ]
@@ -34,25 +24,15 @@ const navigationGroups: SiteNavigationGroup[] = [
 export function DocsShell() {
   const navigate = useNavigate()
   const layoutMatch = useMatch(examplePath)
-  const miniMatch = useMatch(miniExamplePath)
   const openExample = (item: SiteNavigationItem) => {
     if (item.id === 'site-template') {
       navigate(examplePath)
-    }
-    if (item.id === 'mini-site-template') {
-      navigate(miniExamplePath)
     }
   }
 
   return (
     <SiteTemplate
-      activeItemId={
-        layoutMatch
-          ? 'site-template'
-          : miniMatch
-            ? 'mini-site-template'
-            : undefined
-      }
+      activeItemId={layoutMatch ? 'site-template' : undefined}
       navigationGroups={navigationGroups}
       onNavigate={openExample}
       pageTitle="SiteTemplate"

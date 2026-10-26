@@ -1,5 +1,4 @@
 export const examplePath = '/examples/site-template'
-export const miniExamplePath = '/examples/mini-site-template'
 export const siteTemplatePreviewPath = '/previews/site-template'
 export const miniSiteTemplatePreviewPath = '/previews/mini-site-template'
 
@@ -11,14 +10,6 @@ export function exampleHref() {
   }
 
   return `${routerBasename}${examplePath}`
-}
-
-export function miniExampleHref() {
-  if (!routerBasename) {
-    return miniExamplePath
-  }
-
-  return `${routerBasename}${miniExamplePath}`
 }
 
 function withBasename(path: string) {
