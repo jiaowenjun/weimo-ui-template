@@ -31,6 +31,7 @@ export function DocsShell() {
         <FrostedIconButton
           aria-label="返回主页"
           onClick={() => window.location.assign(homePageUrl)}
+          tooltip="返回主页"
         >
           <ChevronLeft />
         </FrostedIconButton>
