@@ -142,6 +142,7 @@ export function MiniSiteTemplate({
         <FrostedIconButton
           aria-label={getThemeToggleLabel(theme)}
           onClick={cycleTheme}
+          tooltip={getThemeToggleLabel(theme)}
         >
           <ThemeIcon theme={theme} />
         </FrostedIconButton>

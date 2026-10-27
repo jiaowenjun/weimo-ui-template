@@ -214,6 +214,7 @@ export function SiteTemplate({
         aria-label="打开侧边栏"
         className="weimo-site-template__sidebar-trigger"
         onClick={() => setSidebarOpen(true)}
+        tooltip="打开侧边栏"
       >
         <Menu />
       </FrostedIconButton>
@@ -234,6 +235,7 @@ export function SiteTemplate({
       <FrostedIconButton
         aria-label={getThemeToggleLabel(theme)}
         onClick={cycleTheme}
+        tooltip={getThemeToggleLabel(theme)}
       >
         <ThemeIcon theme={theme} />
       </FrostedIconButton>
