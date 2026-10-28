@@ -73,6 +73,8 @@ export type SiteTemplateProps = {
   topBarActions?: ReactNode
   /** 顶栏左侧前置插槽；提供后取代 pageTitle 标签（pageTitle 仍驱动 document.title），与右侧 topBarActions 对称。 */
   topBarLeading?: ReactNode
+  /** 是否渲染右侧主题切换按钮；隐藏后主题仍按 defaultTheme/theme 同步到 html.dark，把该位置让给站点自己的 topBarActions。 */
+  showThemeToggle?: boolean
 }
 
 const EMPTY_NAVIGATION_GROUPS: readonly SiteNavigationGroup[] = []
@@ -194,6 +196,7 @@ export function SiteTemplate({
   sidebar,
   sidebarAriaLabel = '侧边栏',
   sidebarHeader,
+  showThemeToggle = true,
   siteName,
   theme: controlledTheme,
   topBarActions,
@@ -260,13 +263,15 @@ export function SiteTemplate({
   const rightSlot = (
     <div className="weimo-site-template__top-bar-slot">
       {topBarActions}
-      <FrostedIconButton
-        aria-label={getThemeToggleLabel(theme)}
-        onClick={cycleTheme}
-        tooltip={getThemeToggleLabel(theme)}
-      >
-        <ThemeIcon theme={theme} />
-      </FrostedIconButton>
+      {showThemeToggle ? (
+        <FrostedIconButton
+          aria-label={getThemeToggleLabel(theme)}
+          onClick={cycleTheme}
+          tooltip={getThemeToggleLabel(theme)}
+        >
+          <ThemeIcon theme={theme} />
+        </FrostedIconButton>
+      ) : null}
     </div>
   )
 

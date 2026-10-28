@@ -107,6 +107,7 @@ export function DocsShell() {
 | `pageTitle` | 顶栏与文档标题显示的当前页标题 |
 | `topBarLeading` | 顶栏左侧前置插槽;提供后取代 `pageTitle` 标签(后者仍驱动 `document.title`),与右侧 `topBarActions` 对称 |
 | `defaultTheme` / `theme` / `onThemeChange` | 主题控制:非受控默认值,或受控模式 + 变更回调 |
+| `showThemeToggle` | 是否渲染右侧主题切换按钮,默认开启;隐藏后主题仍同步到 `html.dark`(对齐 MiniSiteTemplate) |
 | `topBarActions` | 顶栏右侧自定义内容 |
 | `sidebarHeader` | 侧边栏头部自定义内容(仅默认导航模式生效) |
 | `manageDocumentTitle` | 是否自动维护 `document.title`,默认开启 |

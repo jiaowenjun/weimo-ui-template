@@ -176,4 +176,21 @@ describe('SiteTemplate', () => {
       document.querySelector('.weimo-site-template__top-bar-leading'),
     ).not.toBeNull()
   })
+
+  it('hides the theme toggle while keeping theme synchronization', () => {
+    render(
+      <SiteTemplate
+        defaultTheme="dark"
+        navigationGroups={navigationGroups}
+        showThemeToggle={false}
+        siteName="weimo-ui-tagtree"
+      />,
+    )
+
+    expect(
+      screen.queryByRole('button', { name: /切换到/ }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '打开侧边栏' })).toBeInTheDocument()
+    expect(document.documentElement).toHaveClass('dark')
+  })
 })
