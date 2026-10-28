@@ -32,23 +32,18 @@
 pnpm add weimo-ui-template weimo-ui-core @base-ui/react
 ```
 
-如需固定版本,请使用 npm 版本号:
-
-```bash
-pnpm add weimo-ui-template@0.1.1
-```
+如需固定版本,在包名后追加版本号(如 `pnpm add weimo-ui-template@0.3.2`)。
 
 ### 2. 引入基础样式
 
-站点负责选择 token 提供者,并在其后导入模板基础样式:
+在应用入口先引 Core token、再引模板基础样式:
 
 ```css
-@import "tailwindcss";
 @import "weimo-ui-core/styles/tokens.css";
 @import "weimo-ui-template/styles/base.css";
 ```
 
-Markdown 站可以改为导入 `weimo-ui-markdown/styles/tokens.css`;该入口已包含 Core token。
+不依赖 Tailwind:base.css 自带表单控件归一化(含按钮背景重置,与 Tailwind preflight 对齐),无 Tailwind 的项目开箱即用。已在用 Tailwind 的站点可继续保留 `@import "tailwindcss"`,放在上述导入之前即可,两者互不冲突。
 
 ### 3. 挂上 SiteTemplate
 
