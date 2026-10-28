@@ -31,6 +31,15 @@
   }
 
   button,
+  input,
+  select,
+  optgroup,
+  textarea,
+  ::file-selector-button {
+    background-color: transparent;
+  }
+
+  button,
   a {
     color: inherit;
   }

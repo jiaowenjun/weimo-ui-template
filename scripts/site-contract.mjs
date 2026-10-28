@@ -17,6 +17,10 @@ const globalStyles = await readFile(
   new URL('../site/src/styles/global.css', import.meta.url),
   'utf8',
 )
+const templateBaseStyles = await readFile(
+  new URL('../src/styles/base.css', import.meta.url),
+  'utf8',
+)
 const mainEntry = await readFile(
   new URL('../site/src/main.tsx', import.meta.url),
   'utf8',
@@ -138,6 +142,11 @@ assert.match(
   globalStyles,
   /@import "weimo-ui-template\/styles\/base\.css";/,
   'the site must consume the public template base stylesheet',
+)
+assert.match(
+  templateBaseStyles,
+  /button,[\s\S]*?::file-selector-button[\s\S]*?\{[\s\S]*?background-color:\s*transparent;/,
+  'base.css must reset form control backgrounds (Tailwind preflight parity) so consumers without Tailwind never see the UA ButtonFace gray',
 )
 assert.match(
   siteHtml,
