@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useState,
   type ComponentPropsWithoutRef,
   type MouseEvent,
@@ -41,6 +42,15 @@ export type SiteNavigationProps = {
   onNavigate?: (item: SiteNavigationItem) => void
 }
 
+export type SiteTemplateSidebarApi = {
+  /** 关闭窄屏抽屉;桌面常驻面板下为空操作语义,调用无副作用。 */
+  close: () => void
+}
+
+export type SiteTemplateSidebar =
+  | ReactNode
+  | ((api: SiteTemplateSidebarApi) => ReactNode)
+
 export type SiteTemplateProps = {
   activeItemId?: string
   children?: ReactNode
@@ -49,7 +59,9 @@ export type SiteTemplateProps = {
   defaultTheme?: ThemeMode
   mainClassName?: string
   manageDocumentTitle?: boolean
-  navigationGroups: readonly SiteNavigationGroup[]
+  /** 侧边栏自定义内容;提供后整体取代默认的 SiteNavigation 导航(navigationGroups、sidebarHeader、activeItemId、onNavigate 同时失效)。 传函数时注入 `{ close }`,供富侧边栏在选中后收起窄屏抽屉。 */
+  sidebar?: SiteTemplateSidebar
+  navigationGroups?: readonly SiteNavigationGroup[]
   onNavigate?: (item: SiteNavigationItem) => void
   onThemeChange?: (theme: ThemeMode) => void
   pageTitle?: string
@@ -59,7 +71,11 @@ export type SiteTemplateProps = {
   siteName: string
   theme?: ThemeMode
   topBarActions?: ReactNode
+  /** 顶栏左侧前置插槽；提供后取代 pageTitle 标签（pageTitle 仍驱动 document.title），与右侧 topBarActions 对称。 */
+  topBarLeading?: ReactNode
 }
+
+const EMPTY_NAVIGATION_GROUPS: readonly SiteNavigationGroup[] = []
 
 function ThemeIcon({ theme }: { theme: ThemeMode }) {
   switch (theme) {
@@ -170,16 +186,18 @@ export function SiteTemplate({
   defaultTheme = 'system',
   mainClassName,
   manageDocumentTitle = true,
-  navigationGroups,
+  navigationGroups = EMPTY_NAVIGATION_GROUPS,
   onNavigate,
   onThemeChange,
   pageTitle,
   scrollOnNavigate = true,
+  sidebar,
   sidebarAriaLabel = '侧边栏',
   sidebarHeader,
   siteName,
   theme: controlledTheme,
   topBarActions,
+  topBarLeading,
 }: SiteTemplateProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { cycleTheme, theme } = useTheme({
@@ -188,6 +206,12 @@ export function SiteTemplate({
     theme: controlledTheme,
   })
   const closeSidebar = useCallback(() => setSidebarOpen(false), [])
+  const sidebarApi = useMemo(
+    () => ({ close: closeSidebar }),
+    [closeSidebar],
+  )
+  const sidebarContent =
+    typeof sidebar === 'function' ? sidebar(sidebarApi) : sidebar
 
   useEffect(() => {
     if (manageDocumentTitle) {
@@ -218,7 +242,11 @@ export function SiteTemplate({
       >
         <Menu />
       </FrostedIconButton>
-      {pageTitle ? (
+      {topBarLeading ? (
+        <div className="weimo-site-template__top-bar-leading">
+          {topBarLeading}
+        </div>
+      ) : pageTitle ? (
         <FrostedLabel
           className="weimo-site-template__page-title"
           key={pageTitle}
@@ -255,12 +283,14 @@ export function SiteTemplate({
         open={sidebarOpen}
         onClose={closeSidebar}
       >
-        <SiteNavigation
-          activeItemId={activeItemId}
-          groups={navigationGroups}
-          header={navigationHeader}
-          onNavigate={onNavigate ? handleNavigate : undefined}
-        />
+        {sidebarContent ?? (
+          <SiteNavigation
+            activeItemId={activeItemId}
+            groups={navigationGroups}
+            header={navigationHeader}
+            onNavigate={onNavigate ? handleNavigate : undefined}
+          />
+        )}
       </SideBar>
       <TopBar leftSlot={leftSlot} rightSlot={rightSlot} />
 

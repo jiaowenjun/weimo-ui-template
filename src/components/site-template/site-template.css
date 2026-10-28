@@ -38,6 +38,12 @@
     gap: 8px;
   }
 
+  .weimo-site-template__top-bar-leading {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+  }
+
   .weimo-site-template__navigation {
     display: flex;
     min-height: 100%;
@@ -105,7 +111,8 @@
       display: none;
     }
 
-    .weimo-site-template__page-title {
+    .weimo-site-template__page-title,
+    .weimo-site-template__top-bar-leading {
       margin-inline-start: calc(var(--size-sidebar-width) + var(--space-gutter) * 1.6);
     }
   }

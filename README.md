@@ -100,18 +100,34 @@ export function DocsShell() {
 | Prop | 说明 |
 | --- | --- |
 | `siteName` *(必填)* | 站点名,展示在侧边栏头部,并参与 `document.title` |
-| `navigationGroups` *(必填)* | 侧边栏导航分组:分组标题 + 导航项(`id` / `label` / `href`) |
+| `navigationGroups` | 侧边栏导航分组:分组标题 + 导航项(`id` / `label` / `href`);提供 `sidebar` 时可不传 |
+| `sidebar` | 侧边栏自定义内容,提供后整体取代默认 `SiteNavigation`(应用型站点的富侧边栏) |
 | `activeItemId` | 当前高亮的导航项 id |
 | `onNavigate` | 导航项点击回调;提供后由站点路由接管跳转 |
 | `pageTitle` | 顶栏与文档标题显示的当前页标题 |
+| `topBarLeading` | 顶栏左侧前置插槽;提供后取代 `pageTitle` 标签(后者仍驱动 `document.title`),与右侧 `topBarActions` 对称 |
 | `defaultTheme` / `theme` / `onThemeChange` | 主题控制:非受控默认值,或受控模式 + 变更回调 |
 | `topBarActions` | 顶栏右侧自定义内容 |
-| `sidebarHeader` | 侧边栏头部自定义内容 |
+| `sidebarHeader` | 侧边栏头部自定义内容(仅默认导航模式生效) |
 | `manageDocumentTitle` | 是否自动维护 `document.title`,默认开启 |
 | `scrollOnNavigate` | 导航后是否将内容区滚回顶部 |
 | `contentClassName` / `contentProps` / `mainClassName` | 内容区扩展点 |
 
 主题循环顺序为 `light → dark → system`,需要自行组合主题 UI 时,可从 `weimo-ui-template/components/site-template-model` 引入 `ThemeMode`、`getNextThemeMode` 等工具。单独渲染侧边栏可使用同入口导出的 `SiteNavigation`。
+
+### 应用型站点:自定义侧边栏内容
+
+文档站用 `navigationGroups` 声明导航即可;应用型站点(工作台、控制台)的侧边栏往往是富内容面板(统计、树、筛选器),把整块内容交给 `sidebar`,模板继续负责抽屉开合、顶栏、主题与布局占位:
+
+```tsx
+<SiteTemplate
+  pageTitle="工作区"
+  sidebar={<WorkspaceSideBar onSelect={handleSelect} />}
+  siteName="my-app"
+/>
+```
+
+提供 `sidebar` 时不再渲染默认导航,`navigationGroups` / `sidebarHeader` / `activeItemId` / `onNavigate` 随之失效;窄屏抽屉内的关闭按钮仍由模板提供。`sidebar` 也可传函数 `({ close }) => ReactNode`,富侧边栏在选中条目后调用 `close()` 收起窄屏抽屉,对齐默认导航的交互。
 
 ## MiniSiteTemplate 单页站壳
 

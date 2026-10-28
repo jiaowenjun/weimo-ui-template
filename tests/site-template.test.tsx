@@ -125,4 +125,55 @@ describe('SiteTemplate', () => {
     fireEvent.click(screen.getByRole('button', { name: '关闭侧边栏' }))
     expect(sidebar).toHaveAttribute('data-open', 'false')
   })
+
+  it('renders custom sidebar content instead of the default navigation', () => {
+    render(
+      <SiteTemplate
+        sidebar={<div>自定义侧边栏内容</div>}
+        siteName="weimo-biji"
+      />,
+    )
+
+    expect(screen.getByText('自定义侧边栏内容')).toBeInTheDocument()
+    expect(screen.queryByRole('link')).not.toBeInTheDocument()
+    expect(screen.queryByText('weimo-biji')).not.toBeInTheDocument()
+  })
+
+  it('exposes a close hook to functional sidebar content', () => {
+    render(
+      <SiteTemplate
+        sidebar={({ close }) => (
+          <button onClick={close} type="button">
+            选中后收起
+          </button>
+        )}
+        siteName="weimo-biji"
+      />,
+    )
+
+    const sidebar = screen.getByRole('complementary')
+    fireEvent.click(screen.getByRole('button', { name: '打开侧边栏' }))
+    expect(sidebar).toHaveAttribute('data-open', 'true')
+    fireEvent.click(screen.getByRole('button', { name: '选中后收起' }))
+    expect(sidebar).toHaveAttribute('data-open', 'false')
+  })
+
+  it('replaces the page title label with the top bar leading slot', () => {
+    render(
+      <SiteTemplate
+        navigationGroups={navigationGroups}
+        pageTitle="TagTree"
+        siteName="weimo-ui-tagtree"
+        topBarLeading={<button type="button">当前标签</button>}
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: '当前标签' })).toBeInTheDocument()
+    expect(
+      document.querySelector('.weimo-site-template__page-title'),
+    ).toBeNull()
+    expect(
+      document.querySelector('.weimo-site-template__top-bar-leading'),
+    ).not.toBeNull()
+  })
 })
