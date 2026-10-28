@@ -30,6 +30,10 @@
     font: inherit;
   }
 
+  /* 表单控件表面归零：组件库不依赖消费方 reset，UA 默认底色（ButtonFace 灰盘）
+     与描边（如 WebKit button 2px outset）在 base 层抹平，无 Tailwind/preflight
+     的消费站点与官方站观感一致。须驻留 @layer base（低于 components 层），
+     不会压过 frosted 等组件的自有描边。 */
   button,
   input,
   select,
@@ -37,6 +41,7 @@
   textarea,
   ::file-selector-button {
     background-color: transparent;
+    border: none;
   }
 
   button,
