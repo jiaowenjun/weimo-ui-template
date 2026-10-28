@@ -193,4 +193,19 @@ describe('SiteTemplate', () => {
     expect(screen.getByRole('button', { name: '打开侧边栏' })).toBeInTheDocument()
     expect(document.documentElement).toHaveClass('dark')
   })
+
+  it('hides the drawer close button when requested', () => {
+    render(
+      <SiteTemplate
+        navigationGroups={navigationGroups}
+        showSidebarCloseButton={false}
+        siteName="weimo-ui-tagtree"
+      />,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: '打开侧边栏' }))
+    expect(
+      screen.queryByRole('button', { name: '关闭侧边栏' }),
+    ).not.toBeInTheDocument()
+  })
 })

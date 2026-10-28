@@ -75,6 +75,8 @@ export type SiteTemplateProps = {
   topBarLeading?: ReactNode
   /** 是否渲染右侧主题切换按钮；隐藏后主题仍按 defaultTheme/theme 同步到 html.dark，把该位置让给站点自己的 topBarActions。 */
   showThemeToggle?: boolean
+  /** 是否渲染窄屏抽屉右上角关闭按钮，默认开启；隐藏后仍可点击背景或左滑收起抽屉。 */
+  showSidebarCloseButton?: boolean
 }
 
 const EMPTY_NAVIGATION_GROUPS: readonly SiteNavigationGroup[] = []
@@ -196,6 +198,7 @@ export function SiteTemplate({
   sidebar,
   sidebarAriaLabel = '侧边栏',
   sidebarHeader,
+  showSidebarCloseButton = true,
   showThemeToggle = true,
   siteName,
   theme: controlledTheme,
@@ -281,9 +284,11 @@ export function SiteTemplate({
         ariaLabel={sidebarAriaLabel}
         className="weimo-site-template__sidebar"
         drawerAction={
-          <FrostedIconButton aria-label="关闭侧边栏" onClick={closeSidebar}>
-            <X />
-          </FrostedIconButton>
+          showSidebarCloseButton ? (
+            <FrostedIconButton aria-label="关闭侧边栏" onClick={closeSidebar}>
+              <X />
+            </FrostedIconButton>
+          ) : undefined
         }
         open={sidebarOpen}
         onClose={closeSidebar}

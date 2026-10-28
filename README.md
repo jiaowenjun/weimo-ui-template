@@ -108,6 +108,7 @@ export function DocsShell() {
 | `topBarLeading` | 顶栏左侧前置插槽;提供后取代 `pageTitle` 标签(后者仍驱动 `document.title`),与右侧 `topBarActions` 对称 |
 | `defaultTheme` / `theme` / `onThemeChange` | 主题控制:非受控默认值,或受控模式 + 变更回调 |
 | `showThemeToggle` | 是否渲染右侧主题切换按钮,默认开启;隐藏后主题仍同步到 `html.dark`(对齐 MiniSiteTemplate) |
+| `showSidebarCloseButton` | 是否渲染窄屏抽屉右上角关闭按钮,默认开启;隐藏后仍可点击背景或左滑收起 |
 | `topBarActions` | 顶栏右侧自定义内容 |
 | `sidebarHeader` | 侧边栏头部自定义内容(仅默认导航模式生效) |
 | `manageDocumentTitle` | 是否自动维护 `document.title`,默认开启 |
@@ -128,7 +129,7 @@ export function DocsShell() {
 />
 ```
 
-提供 `sidebar` 时不再渲染默认导航,`navigationGroups` / `sidebarHeader` / `activeItemId` / `onNavigate` 随之失效;窄屏抽屉内的关闭按钮仍由模板提供。`sidebar` 也可传函数 `({ close }) => ReactNode`,富侧边栏在选中条目后调用 `close()` 收起窄屏抽屉,对齐默认导航的交互。
+提供 `sidebar` 时不再渲染默认导航,`navigationGroups` / `sidebarHeader` / `activeItemId` / `onNavigate` 随之失效;窄屏抽屉内的关闭按钮仍由模板提供(`showSidebarCloseButton={false}` 可隐藏,收起仍可点背景或左滑)。`sidebar` 也可传函数 `({ close }) => ReactNode`,富侧边栏在选中条目后调用 `close()` 收起窄屏抽屉,对齐默认导航的交互。
 
 ## MiniSiteTemplate 单页站壳
 
