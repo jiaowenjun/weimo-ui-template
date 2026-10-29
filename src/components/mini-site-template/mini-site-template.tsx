@@ -17,6 +17,7 @@ import {
   getThemeToggleLabel,
   type ThemeMode,
 } from '../site-template/site-template-model'
+import 'weimo-ui-core/styles/tokens.css'
 import './mini-site-template.css'
 
 export type MiniSiteTemplateProps = {

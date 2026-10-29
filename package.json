@@ -1,6 +1,6 @@
 {
   "name": "weimo-ui-template",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Reusable site shell and content primitives for Weimo UI documentation sites.",
   "type": "module",
   "license": "MIT",
@@ -57,8 +57,9 @@
     "test:typecheck": "pnpm typecheck",
     "test": "vitest run",
     "test:site": "node scripts/site-contract.mjs",
+    "test:css-tokens": "node scripts/css-token-contract.mjs",
     "check:package": "pnpm build && publint && attw --pack . --profile esm-only --ignore-rules internal-resolution-error",
-    "verify": "pnpm typecheck && pnpm test && pnpm test:site && pnpm check:package && pnpm --dir site build",
+    "verify": "pnpm typecheck && pnpm test && pnpm test:site && pnpm check:package && pnpm test:css-tokens && pnpm --dir site build",
     "prepack": "pnpm build"
   },
   "dependencies": {

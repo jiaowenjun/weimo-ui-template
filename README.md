@@ -36,14 +36,13 @@ pnpm add weimo-ui-template weimo-ui-core @base-ui/react
 
 ### 2. 引入基础样式
 
-在应用入口先引 Core token、再引模板基础样式:
+Core token（颜色、字号、间距……含 `.dark` 暗色）已随模板组件自动加载,无需手动引入;模板基础样式仍建议在应用入口手动引入:
 
 ```css
-@import "weimo-ui-core/styles/tokens.css";
 @import "weimo-ui-template/styles/base.css";
 ```
 
-不依赖 Tailwind:base.css 自带表单控件归一化(含按钮背景重置,与 Tailwind preflight 对齐),无 Tailwind 的项目开箱即用。已在用 Tailwind 的站点可继续保留 `@import "tailwindcss"`,放在上述导入之前即可,两者互不冲突。
+base.css 是页面级 reset（表单控件归一化,含按钮背景重置,与 Tailwind preflight 对齐）,作用于整个页面而非组件自身,因此保留手动引入、由应用决定是否启用。不依赖 Tailwind 的项目开箱即用;已在用 Tailwind 的站点可继续保留 `@import "tailwindcss"`,放在 base.css 之前即可,两者互不冲突。仍显式引入 `weimo-ui-core/styles/tokens.css` 无害,定义幂等。
 
 ### 3. 挂上 SiteTemplate
 

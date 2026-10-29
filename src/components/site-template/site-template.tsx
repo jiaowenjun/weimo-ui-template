@@ -21,6 +21,7 @@ import {
   getThemeToggleLabel,
   type ThemeMode,
 } from './site-template-model'
+import 'weimo-ui-core/styles/tokens.css'
 import './site-template.css'
 
 export type SiteNavigationItem = {
