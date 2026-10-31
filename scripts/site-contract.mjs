@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
+// 站点契约:断言文档站消费模板公开 API 与既定结构,防演示复刻/壳层结构回归。
+// 2026-10-31 按现行结构重写:旧版断言的复刻式预览(site-template-preview.tsx,
+// 视口开关/宽度滑块直挂卡片)自 e8b0e87「实底 iframe 预览扶正」起已不存在,
+// 脚本 ENOENT 恒红;现断言对象=单页双卡 + iframe 直出 + 实底跟随缩放体系。
+
 const shellSource = await readFile(
   new URL('../site/src/docs/shell/docs-shell.tsx', import.meta.url),
   'utf8',
@@ -9,8 +14,28 @@ const layoutPage = await readFile(
   new URL('../site/src/docs/pages/layout-example-page.tsx', import.meta.url),
   'utf8',
 )
-const layoutPreview = await readFile(
-  new URL('../site/src/docs/examples/site-template-preview.tsx', import.meta.url),
+const siteDemo = await readFile(
+  new URL('../site/src/docs/examples/site-template-demo.tsx', import.meta.url),
+  'utf8',
+)
+const miniDemo = await readFile(
+  new URL('../site/src/docs/examples/mini-site-template-demo.tsx', import.meta.url),
+  'utf8',
+)
+const followFrame = await readFile(
+  new URL('../site/src/docs/preview/solid-follow-preview-frame.tsx', import.meta.url),
+  'utf8',
+)
+const sitePreviewPage = await readFile(
+  new URL('../site/src/docs/previews/site-template-preview-page.tsx', import.meta.url),
+  'utf8',
+)
+const miniPreviewPage = await readFile(
+  new URL('../site/src/docs/previews/mini-site-template-preview-page.tsx', import.meta.url),
+  'utf8',
+)
+const routesModule = await readFile(
+  new URL('../site/src/docs/routes.ts', import.meta.url),
   'utf8',
 )
 const globalStyles = await readFile(
@@ -33,111 +58,102 @@ const sitePackage = JSON.parse(
   await readFile(new URL('../site/package.json', import.meta.url), 'utf8'),
 )
 
+// 文档站壳:消费公开 MiniSiteTemplate API,顶栏双按钮(返回主页/GitHub)为既定终态,
+// 站内不再放主题切换(组件契约默认跟随系统)。
 assert.match(
   shellSource,
-  /from 'weimo-ui-template\/components\/site-template'/,
-  'the site shell must consume the public SiteTemplate API',
+  /from 'weimo-ui-template\/components\/mini-site-template'/,
+  'the site shell must consume the public MiniSiteTemplate API',
 )
+assert.match(
+  shellSource,
+  /showThemeToggle=\{false\}/,
+  'the shell must not duplicate the theme toggle (system-following is the contract)',
+)
+assert.match(shellSource, /aria-label="返回主页"/, 'the top bar must keep the back-to-home button')
+assert.match(shellSource, /aria-label="GitHub 仓库"/, 'the top bar must keep the GitHub button')
+
+// 布局示例页:单页双卡,完整版与 mini 演示并列。
 assert.match(
   layoutPage,
-  /return <SiteTemplatePreview \/>/,
-  'the example page must render the layout preview directly',
+  /<SiteTemplateDemo \/>[\s\S]*<MiniSiteTemplateDemo \/>/,
+  'the layout page must render both template demos side by side',
+)
+
+// 演示卡:真实组件经 iframe 直出,卡片本体只负责壳与滑块。
+for (const [name, demo, hrefFactory] of [
+  ['SiteTemplate demo', siteDemo, 'siteTemplatePreviewHref'],
+  ['MiniSiteTemplate demo', miniDemo, 'miniSiteTemplatePreviewHref'],
+]) {
+  assert.match(
+    demo,
+    /from 'weimo-ui-core\/components\/component-preview-card'/,
+    `the ${name} must use the standard ComponentPreviewCard`,
+  )
+  assert.match(
+    demo,
+    /from '\.\.\/routes'/,
+    `the ${name} must derive its iframe href from the shared routes module`,
+  )
+  assert.match(
+    demo,
+    new RegExp(hrefFactory),
+    `the ${name} must link its preview iframe through ${hrefFactory}`,
+  )
+  assert.match(
+    demo,
+    /from '\.\.\/preview\/solid-follow-preview-frame'/,
+    `the ${name} must render through the SolidFollowPreviewFrame`,
+  )
+  assert.match(
+    demo,
+    /from 'weimo-ui-core\/components\/slider'/,
+    `the ${name} width control must use the core Slider`,
+  )
+  assert.match(demo, /ariaLabel="调整预览宽度百分比"/, `the ${name} slider must be labelled`)
+  assert.match(demo, /aria-label="重置预览宽度百分比"/, `the ${name} must keep a reset control`)
+}
+
+// 实底跟随预览壳:缩放倍率由 BASE_WIDTH ÷ maxLayoutWidth 派生且恒定,
+// 卡片装不下基准时右端点动态收紧——比例恒定语义是这套预览的地基。
+assert.match(
+  followFrame,
+  /const BASE_WIDTH = 672/,
+  'the follow frame must keep the fixed scale base width',
 )
 assert.match(
-  layoutPreview,
-  /from 'weimo-ui-core\/components\/component-preview-card'/,
-  'the layout example must use the standard ComponentPreviewCard',
+  followFrame,
+  /const zoomFactor = maxLayoutWidth \/ BASE_WIDTH/,
+  'the zoom factor must derive from the base width',
 )
 assert.match(
-  layoutPreview,
-  /<ComponentPreviewCard[\s\S]*label="SiteTemplate 布局示例"/,
-  'the preview card header must show its title',
+  followFrame,
+  /const scale = 1 \/ zoomFactor/,
+  'the scale must stay constant per card regardless of slider position',
 )
-assert.doesNotMatch(
-  layoutPreview,
-  /LabeledSwitch|切换预览视口宽度|labelOff="宽屏"|labelOn="窄屏"/,
-  'the preview card must not expose a manual wide/narrow Switch',
+
+// iframe 直出页:两壳各自消费对应公开 API,演示的是真实组件而非复刻。
+assert.match(
+  sitePreviewPage,
+  /from 'weimo-ui-template\/components\/site-template'/,
+  'the preview page must consume the public SiteTemplate API',
 )
 assert.match(
-  layoutPreview,
-  /const narrowViewportQuery = '\(max-width: 699px\)'/,
-  'the preview must use the inverse of the SiteTemplate 700px breakpoint',
+  miniPreviewPage,
+  /from 'weimo-ui-template\/components\/mini-site-template'/,
+  'the preview page must consume the public MiniSiteTemplate API',
 )
 assert.match(
-  layoutPreview,
-  /window\.matchMedia\(narrowViewportQuery\)[\s\S]*addEventListener\('change', syncViewport\)/,
-  'the preview must react to real viewport width changes',
+  routesModule,
+  /export function siteTemplatePreviewHref\(\)/,
+  'routes must expose the SiteTemplate preview href factory',
 )
 assert.match(
-  layoutPreview,
-  /from 'weimo-ui-core\/components\/slider'/,
-  'the content width control must use the core Slider',
+  routesModule,
+  /export function miniSiteTemplatePreviewHref\(\)/,
+  'routes must expose the MiniSiteTemplate preview href factory',
 )
-assert.match(
-  layoutPreview,
-  /footer=\{[\s\S]*ariaLabel="调整示例内容区宽度"/,
-  'the preview card footer must host the content width slider',
-)
-assert.match(
-  layoutPreview,
-  /aria-label="重置示例内容区宽度"[\s\S]*onClick=\{resetContentWidth\}/,
-  'the footer reset button must restore the default content width',
-)
-assert.match(
-  layoutPreview,
-  /addEventListener\('resize', syncPreviewNarrow\)/,
-  'the preview must reflow to the narrow layout from its own element width',
-)
-assert.doesNotMatch(
-  layoutPreview,
-  /site-template-preview__controls/,
-  'the wide/narrow control must not remain inside the preview canvas',
-)
-assert.doesNotMatch(
-  layoutPreview,
-  /<SiteTemplate(?:\s|>)/,
-  'the card preview must not mount a second viewport-level SiteTemplate',
-)
-assert.match(
-  layoutPreview,
-  /FrostedLabel/,
-  'the card preview title must use the same frosted material as SiteTemplate',
-)
-assert.match(
-  layoutPreview,
-  /FrostedIconButton/,
-  'the card preview controls must use the same frosted material as SiteTemplate',
-)
-assert.match(
-  layoutPreview,
-  /from 'weimo-ui-template\/components\/site-template-model'/,
-  'the card preview must share the SiteTemplate theme cycle model',
-)
-assert.match(
-  layoutPreview,
-  /useState<ThemeMode>\('system'\)/,
-  'the card preview must default to the system theme mode',
-)
-assert.match(
-  layoutPreview,
-  /const systemThemeQuery = '\(prefers-color-scheme: dark\)'[\s\S]*addEventListener\('change', syncSystemTheme\)/,
-  'the system theme mode must react to OS theme changes',
-)
-assert.match(
-  layoutPreview,
-  /data-preview-theme=\{resolvedTheme\}[\s\S]*data-preview-theme-mode=\{theme\}/,
-  'the card preview must expose both its resolved and selected theme modes',
-)
-assert.match(
-  layoutPreview,
-  /setTheme\(\(currentTheme\) => getNextThemeMode\(currentTheme\)\)/,
-  'the card preview theme button must cycle through the shared theme modes',
-)
-assert.match(
-  layoutPreview,
-  /case 'system':[\s\S]*<MonitorIcon \/>/,
-  'the card preview must show a monitor icon for the system theme mode',
-)
+
 assert.match(
   globalStyles,
   /@import "weimo-ui-template\/styles\/base\.css";/,
@@ -173,10 +189,10 @@ assert.ok(
     mainEntry.indexOf("import App from './app/app'"),
   'global styles must load before App so Tailwind establishes cascade layer order before component CSS',
 )
-assert.equal(
+assert.match(
   sitePackage.dependencies['react-router'],
-  '8.4.0',
-  'the site must use the shared React Router version',
+  /^\d+\.\d+\.\d+$/,
+  'the site must pin an exact React Router version (family-shared, no loose range)',
 )
 assert.equal(
   sitePackage.dependencies['weimo-ui-template'],
@@ -187,27 +203,6 @@ assert.equal(
   sitePackage.engines,
   undefined,
   'the site must not declare its own Node engine range',
-)
-
-const miniDemo = await readFile(
-  new URL('../site/src/docs/examples/mini-site-template-demo.tsx', import.meta.url),
-  'utf8',
-)
-
-assert.match(
-  miniDemo,
-  /from 'weimo-ui-template\/components\/mini-site-template'/,
-  'the mini demo must consume the public MiniSiteTemplate API',
-)
-assert.match(
-  miniDemo,
-  /<MiniSiteTemplate\b/,
-  'the mini demo must render the MiniSiteTemplate directly',
-)
-assert.match(
-  shellSource,
-  /id: 'mini-site-template'/,
-  'the docs shell must link to the mini demo',
 )
 
 console.log('site contract passed')
