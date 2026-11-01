@@ -1,6 +1,6 @@
 {
   "name": "weimo-ui-template",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Reusable site shell and content primitives for Weimo UI documentation sites.",
   "type": "module",
   "license": "MIT",
@@ -76,6 +76,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "jsdom": "^30.1.2",
