@@ -35,6 +35,8 @@ export type MiniSiteTemplateProps = {
   subheadline?: ReactNode
   theme?: ThemeMode
   topBarActions?: ReactNode
+  /** 顶栏居中悬浮插槽（灵动岛式，叠于左右插槽之上）；用于临时通知等短驻内容，配 core 的 TopBarNotice 使用，不传不渲染。 */
+  topBarCenter?: ReactNode
   topBarLeading?: ReactNode
 }
 
@@ -117,6 +119,7 @@ export function MiniSiteTemplate({
   subheadline,
   theme: controlledTheme,
   topBarActions,
+  topBarCenter,
   topBarLeading,
 }: MiniSiteTemplateProps) {
   const { cycleTheme, theme } = useTheme({
@@ -153,7 +156,12 @@ export function MiniSiteTemplate({
 
   return (
     <>
-      <TopBar leftSlot={leftSlot} rightSlot={rightSlot} variant="full-width" />
+      <TopBar
+        centerSlot={topBarCenter}
+        leftSlot={leftSlot}
+        rightSlot={rightSlot}
+        variant="full-width"
+      />
 
       <main className={cn('weimo-mini-site-template', mainClassName)}>
         <div

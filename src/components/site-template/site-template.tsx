@@ -72,6 +72,8 @@ export type SiteTemplateProps = {
   siteName: string
   theme?: ThemeMode
   topBarActions?: ReactNode
+  /** 顶栏居中悬浮插槽（灵动岛式，叠于左右插槽之上）；用于临时通知等短驻内容，配 core 的 TopBarNotice 使用，不传不渲染。 */
+  topBarCenter?: ReactNode
   /** 顶栏左侧前置插槽；提供后取代 pageTitle 标签（pageTitle 仍驱动 document.title），与右侧 topBarActions 对称。 */
   topBarLeading?: ReactNode
   /** 是否渲染右侧主题切换按钮；隐藏后主题仍按 defaultTheme/theme 同步到 html.dark，把该位置让给站点自己的 topBarActions。 */
@@ -204,6 +206,7 @@ export function SiteTemplate({
   siteName,
   theme: controlledTheme,
   topBarActions,
+  topBarCenter,
   topBarLeading,
 }: SiteTemplateProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -303,7 +306,7 @@ export function SiteTemplate({
           />
         )}
       </SideBar>
-      <TopBar leftSlot={leftSlot} rightSlot={rightSlot} />
+      <TopBar centerSlot={topBarCenter} leftSlot={leftSlot} rightSlot={rightSlot} />
 
       <main className={cn('weimo-site-template', mainClassName)}>
         <div className="weimo-site-template__layout">
