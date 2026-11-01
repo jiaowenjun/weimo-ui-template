@@ -115,6 +115,14 @@
     .weimo-site-template__top-bar-leading {
       margin-inline-start: calc(var(--size-sidebar-width) + var(--space-gutter) * 1.6);
     }
+
+    /* 灵动岛居中于内容列:侧栏常驻档(与上方同断点)把 core 居中槽位的
+       行首锚点右移到内容列起点,值与 __page-title 的越侧栏缩进同源。
+       变量声明在 TopBar 宿主元素上(__center 的祖先,不在其自身——
+       会遮蔽消费方注入);core <0.3.3 不认该变量,静默退回全宽居中。 */
+    .weimo-site-template__top-bar {
+      --top-bar-center-inset: calc(var(--size-sidebar-width) + var(--space-gutter) * 1.6);
+    }
   }
 
   @media (max-width: 699px) {

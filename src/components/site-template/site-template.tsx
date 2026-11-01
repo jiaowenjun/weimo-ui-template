@@ -306,7 +306,12 @@ export function SiteTemplate({
           />
         )}
       </SideBar>
-      <TopBar centerSlot={topBarCenter} leftSlot={leftSlot} rightSlot={rightSlot} />
+      <TopBar
+        centerSlot={topBarCenter}
+        className="weimo-site-template__top-bar"
+        leftSlot={leftSlot}
+        rightSlot={rightSlot}
+      />
 
       <main className={cn('weimo-site-template', mainClassName)}>
         <div className="weimo-site-template__layout">
